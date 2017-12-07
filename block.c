@@ -6,8 +6,8 @@ typedef struct block
 	bool isProcess;
 	char* label;
 	int size;
-	block* prevBlock;
-	block* nextBlock;
+	struct block* prevBlock;
+	struct block* nextBlock;
 }block;
 
 
