@@ -1,20 +1,21 @@
 #include <stdbool.h>
 #include <stdio.h>
 
-typedef struct block
+//typedef doesn't do anything in gcc
+struct block
 {
 	bool isProcess;
 	char* label;
 	int size;
 	block* prevBlock;
 	block* nextBlock;
-}block;
+};
 
 
 block* createEmptyBlock(int size, block* prevBlock, block* nextBlock)
 {
-	//This is some janky initialization syntax
-	block newBlock =
+	//Initialize as a pointer to begin with
+	block *newBlock = new block
 	{
 		.isProcess = false,
 		.label = NULL,
@@ -23,13 +24,13 @@ block* createEmptyBlock(int size, block* prevBlock, block* nextBlock)
 		.nextBlock = nextBlock
 	};
 
-	return &newBlock;
+	return newBlock;
 }
 
 block* createProcess(int size, char* label, block* prevBlock, block* nextBlock)
 {
-	//Might get some string pointer errors here
-	block newProcess =
+	//Same as before
+	block *newProcess = new block
 	{
 		.isProcess = false,
 		.label = label,
@@ -38,7 +39,7 @@ block* createProcess(int size, char* label, block* prevBlock, block* nextBlock)
 		.nextBlock = nextBlock
 	};
 
-	return &newProcess;
+	return newProcess;
 }
 
 void printBlockContents(block b)
