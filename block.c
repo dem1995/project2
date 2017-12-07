@@ -4,7 +4,7 @@
 typedef struct block
 {
 	bool isProcess;
-	char label[16];
+	char* label;
 	int size;
 	block* prevBlock;
 	block* nextBlock;
@@ -17,7 +17,7 @@ block* createEmptyBlock(int size, block* prevBlock, block* nextBlock)
 	block newBlock =
 	{
 		.isProcess = false,
-		.label = 0,
+		.label = NULL,
 		.size = size,
 		.prevBlock = prevBlock,
 		.nextBlock = nextBlock
