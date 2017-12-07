@@ -11,34 +11,43 @@ typedef struct block
 }block;
 
 
-block* createEmptyBlock(int size, block* prevBlock, block* nextBlock)
+block createEmptyBlock(int size, block* prevBlock, block* nextBlock)
 {
-	//This is some janky initialization syntax
 	block newBlock =
 	{
-		.isProcess = false,
-		.label = NULL,
-		.size = size,
-		.prevBlock = prevBlock,
-		.nextBlock = nextBlock
+		//.isProcess = false,
+		false,
+		//.label = 0,
+		NULL,
+		//.size = size,
+		size,
+		//.prevBlock = prevBlock,
+		prevBlock,
+		//.nextBlock = nextBlock
+		nextBlock
 	};
 
-	return &newBlock;
+	return newBlock;
 }
 
-block* createProcess(int size, char* label, block* prevBlock, block* nextBlock)
+block createProcess(int size, char* label, block* prevBlock, block* nextBlock)
 {
 	//Might get some string pointer errors here
 	block newProcess =
 	{
-		.isProcess = false,
-		.label = label,
-		.size = size,
-		.prevBlock = prevBlock,
-		.nextBlock = nextBlock
+		//.isProcess = false,
+		false,
+		//.label = label,
+		label,
+		//.size = size,
+		size,
+		//.prevBlock = prevBlock,
+		prevBlock,
+		//.nextBlock = nextBlock
+		nextBlock
 	};
 
-	return &newProcess;
+	return newProcess;
 }
 
 void printBlockContents(block b)
