@@ -46,11 +46,11 @@ int main(int argc, char ** argv)
 	if (argv[2] != NULL)
 	{
 		if (argv[1][0] == '/')
-			shellInFP = fopen(argv[1], "r");
+			shellInFP = fopen(argv[2], "r");
 		else
 		{
 			printf("%s\n", cwd);
-			openFile(cwd, argv[1], &shellInFP, "r");
+			openFile(cwd, argv[2], &shellInFP, "r");
 		}
 		if (shellInFP == NULL)
 		{
