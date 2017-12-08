@@ -3,6 +3,7 @@
 #include <string.h>
 #include "block.c"
 
+void printMemContents(memory mem);
 
 typedef struct memory
 {
