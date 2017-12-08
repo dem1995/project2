@@ -47,16 +47,20 @@ void cleanMemory(memory mem)
 	}
 }
 
-void spawnProcess(memory* mem, block* theBlock, char* label, int processSize, char* processName)
+void spawnProcess(memory* mem, block* theBlock, char* label, int processSize)
 {
 	if (processSize > theBlock->size)
-		printf("Process %s size too big", processName);
+		printf("Process %s size too big", label);
 	else if (processSize == theBlock->size)
 		*(mem->firstBlock) = createProcess(processSize, label, NULL, theBlock->nextBlock);
 	else
 	{
-		*(theBlock->nextBlock) = createProcess(processSize, label, theBlock, theBlock->nextBlock);
-		theBlock->size -= processSize;
+		{
+			if (theBlock->nextBlock == NULL)
+				theBlock->nextBlock = malloc(sizeof(block));
+			*(theBlock->nextBlock) = createProcess(processSize, label, theBlock, theBlock->nextBlock);
+			theBlock->size -= processSize;
+		}
 	}
 }
 

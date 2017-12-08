@@ -13,7 +13,6 @@ typedef struct block
 
 block createEmptyBlock(int size, block* prevBlock, block* nextBlock)
 {
-
 	block newBlock =
 	{
 		//.isProcess = false,
