@@ -6,8 +6,8 @@ bool bestFitProcess(memory* mem, int size, char* label);
 
 void main()
 {
-	printf("Creating memory of size 21\n");
-	memory mem = createMemory(21);
+	printf("Creating memory of size 20\n");
+	memory mem = createMemory(20);
 	printf("\n");
 
 	printf("FirstFit adding size 13 fred\n");
