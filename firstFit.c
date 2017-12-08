@@ -38,10 +38,10 @@ void firstFitProcess(memory* mem, int size, char* label)
 		if (b->size >= size && !(b->isProcess))
 		{
 			printMemContents(*mem);
-			printf("3\n");
+			printf("7\n");
 			spawnProcess(mem, b, label, size);
 			printMemContents(*mem);
-			printf("3\n");
+			printf("7\n");
 		}
 	}
 }
