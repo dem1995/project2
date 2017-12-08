@@ -1,4 +1,5 @@
 #include "memory.c"
+#include <stdlib.h>
 
 void main()
 {
@@ -6,7 +7,7 @@ void main()
 
 	memory mem = createMemory(20);
 
-	free(mem);
+	free(mem.firstBlock);
 	printf("hi");
 
 	//printMemContents(mem);
