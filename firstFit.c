@@ -6,7 +6,7 @@ void main()
 	memory mem = createMemory(20);
 
 	
-	spawnProcess(&mem, mem.firstBlock, "", 15);
+	spawnProcess(&mem, mem.firstBlock, "32", 15);
 
 	printMemContents(mem);
 	freeMemory(mem);
