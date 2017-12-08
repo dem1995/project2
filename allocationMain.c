@@ -40,7 +40,7 @@ int main(int argc, char ** argv)
 		getcwd(cwd, sizeof(cwd));		
 	}
 
-
+	memory mem = createMemory(spaceToAllocate);
 
 
 	if (argv[2] != NULL)
@@ -78,7 +78,11 @@ int main(int argc, char ** argv)
 														 //if the user's input actually has things
 			if (args[0])
 			{
-				printf(args[0]);
+				if (strcmp(args[0], "FIRSTFIT"))
+				{
+					firstFitProcess(&mem, atoi(args[2]), args[1]);
+					printMemContents(mem);
+				}
 			}
 		}
 	}
