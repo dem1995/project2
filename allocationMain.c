@@ -83,9 +83,11 @@ int main(int argc, char ** argv)
 
 				if (strcmp(args[0], "REQUEST")==0)
 				{
-
+					printf("Request method: \n");
+					printMemContents(mem);
 					firstFitProcess(&mem, atoi(args[2]), args[1]);
 					printMemContents(mem);
+					printf("Request method ended. \n");
 				}
 				else if (strcmp(args[0], "RELEASE") == 0)
 				{
