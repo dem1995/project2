@@ -2,6 +2,7 @@
 #include <stdlib.h>
 
 void firstFitProcess(memory* mem, int size, char* label);
+bool bestFitProcess(memory* mem, int size, char* label);
 
 void main()
 {
