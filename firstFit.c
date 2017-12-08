@@ -3,16 +3,13 @@
 
 void main()
 {
-	printf("hi");
-
 	memory mem = createMemory(20);
 
 	
 	spawnProcess(&mem, mem.firstBlock, "", 15);
 
 	printMemContents(mem);
-	free(mem.firstBlock);
-	printf("hi");
+	freeMemory(mem);
 	return 0;
 }
 
