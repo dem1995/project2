@@ -1,6 +1,8 @@
 #include "memory.c"
 #include <stdlib.h>
 
+void firstFitProcess(memory* mem, int size);
+
 void main()
 {
 	memory mem = createMemory(20);
