@@ -8,23 +8,28 @@ void main()
 {
 	printf("Creating memory of size 21\n");
 	memory mem = createMemory(21);
+	printf("\n");
 
 	printf("FirstFit adding size 13 fred\n");
 	firstFitProcess(&mem, 13, "fred");	
 	printMemContents(mem);
+	printf("\n");
 
 	printf("FirstFit adding size 6 geore\n");
 	firstFitProcess(&mem, 6, "george");
 	printMemContents(mem);
+	printf("\n");
 	
 	printf("Releasing fred");
 	releaseProcess(&mem, "fred");
 	cleanMemory(mem);
 	printMemContents(mem);
+	printf("\n");
 
 	printf("BestFit adding harold");
 	bestFitProcess(&mem, 1, "harold");
 	printMemContents(mem);
+	printf("\n");
 
 	printf("End");
 	freeMemory(mem);
