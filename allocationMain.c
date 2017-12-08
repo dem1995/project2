@@ -3,10 +3,43 @@
 
 bool firstFitProcess(memory* mem, int size, char* label);
 bool bestFitProcess(memory* mem, int size, char* label);
+bool nextFitProcess(memory* mem, int size, char* label, int* nextFitCounter);
 
 int nextFitCounter;
 
 void main()
+{
+	printf("Creating memory of size 20\n");
+	memory mem = createMemory(20);
+	printf("\n");
+
+	printf("FirstFit adding size 13 fred\n");
+	firstFitProcess(&mem, 13, "fred");
+	printMemContents(mem);
+	printf("\n");
+
+	printf("NextFit adding size 6 geore\n");
+	nextFitProcess(&mem, 6, "george", &nextFitCounter);
+	printMemContents(mem);
+	printf("\n");
+
+	printf("Releasing fred\n");
+	releaseProcess(&mem, "fred");
+	cleanMemory(mem);
+	printMemContents(mem);
+	printf("\n");
+
+	printf("NextFit adding harold\n");
+	nextFitProcess(&mem, 1, "harold", &nextFitCounter);
+	printMemContents(mem);
+	printf("\n");
+
+	printf("End");
+	freeMemory(mem);
+	return 0;
+}
+
+void main2()
 {
 	printf("Creating memory of size 20\n");
 	memory mem = createMemory(20);
