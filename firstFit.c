@@ -4,7 +4,7 @@ void main()
 {
 	memory mem = createMemory(20);
 
-
+	printf("hi");
 
 	printMemContents(mem);
 	return 0;
