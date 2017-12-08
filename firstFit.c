@@ -62,7 +62,7 @@ bool bestFitProcess(memory* mem, int size, char* label)
 	//Cycle through the blocks, finding the minimum accomodating block size
 	for (block* b = mem->firstBlock; b != NULL; b = b->nextBlock)
 	{
-		if (b->size > size)
+		if (b->size >= size)
 			if(!(b->isProcess))
 				if (minAccomodatingBlockSize < 0 || b->size < minAccomodatingBlockSize)
 				{
