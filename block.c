@@ -13,6 +13,7 @@ typedef struct block
 
 block createEmptyBlock(int size, block* prevBlock, block* nextBlock)
 {
+
 	block newBlock =
 	{
 		//.isProcess = false,
@@ -33,7 +34,7 @@ block createEmptyBlock(int size, block* prevBlock, block* nextBlock)
 block createProcess(int size, char* label, block* prevBlock, block* nextBlock)
 {
 	//Might get some string pointer errors here
-	block newProcess =
+	block newProcess = 
 	{
 		//.isProcess = false,
 		false,

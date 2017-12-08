@@ -13,12 +13,15 @@ typedef struct memory
 memory createMemory(int size)
 {
 	//This is some janky initialization syntax
-	memory newMemory =
-	{
+	memory newMemory;
+	newMemory.totalMemory = size;
+	newMemory.freeMemory = size;
+	*(newMemory.firstBlock) = createEmptyBlock(size, NULL, NULL);
+	/*{
 		.totalMemory = size,
 		.freeMemory = size,
 		.firstBlock = createEmptyBlock(size, NULL, NULL)
-	};
+	};*/
 
 	return newMemory;
 }
@@ -47,10 +50,10 @@ void spawnProcess(memory* mem, block* theBlock, char* label, int processSize, ch
 	if (processSize > theBlock->size)
 		printf("Process %s size too big", processName);
 	else if (processSize == theBlock->size)
-		mem->firstBlock = createProcess(processSize, label, NULL, theBlock->nextBlock);
+		*(mem->firstBlock) = createProcess(processSize, label, NULL, theBlock->nextBlock);
 	else
 	{
-		theBlock->nextBlock = createProcess(processSize, label, theBlock, theBlock->nextBlock);
+		*(theBlock->nextBlock) = createProcess(processSize, label, theBlock, theBlock->nextBlock);
 		theBlock->size -= processSize;
 	}
 }
