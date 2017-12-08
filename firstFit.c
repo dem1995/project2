@@ -15,7 +15,7 @@ void main()
 
 	firstFitProcess(&mem, 6, "george");
 
-	releaseProcess("fred");
+	releaseProcess(&mem, "fred");
 
 	printMemContents(mem);
 	freeMemory(mem);
