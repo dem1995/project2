@@ -13,13 +13,14 @@ int main(int argc, char ** argv)
 {
 	int spaceToAllocate = 0;
 	if (argc > 1)
-		spaceToAllocate = atoi(argv[2]);
+		spaceToAllocate = atoi(argv[1]);
 
 	if (argc > 2)
 	{
 		char cwd[1024];
 		getcwd(cwd, sizeof(cwd));
 		printf(cwd);
+		printf("%s", argv[2]);
 	}
 }
 void main2()
