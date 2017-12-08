@@ -20,12 +20,12 @@ void main()
 	firstFitProcess(&mem, 6, "george");
 	
 	printMemContents(mem);
-	//printf("3\n");
+	printf("3\n");
 
-	//releaseProcess(&mem, "fred");
-	//cleanMemory(mem);
+	releaseProcess(&mem, "fred");
+	cleanMemory(mem);
 
-	//printMemContents(mem);
+	printMemContents(mem);
 	freeMemory(mem);
 	return 0;
 }
