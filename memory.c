@@ -58,7 +58,10 @@ void spawnProcess(memory* mem, block* theBlock, char* label, int processSize)
 		{
 			if (theBlock->nextBlock == NULL)
 				theBlock->nextBlock = malloc(sizeof(block));
-			*(theBlock->nextBlock) = createProcess(processSize, label, theBlock, theBlock->nextBlock);
+
+			block* nextBlockCopy = theBlock->nextBlock;
+			theBlock->nextBlock = malloc(sizeof(block));
+			(*theBlock->nextBlock)= createProcess(processSize, label, theBlock->prevBlock, theBlock->nextBlock);
 			theBlock->size -= processSize;
 		}
 	}
