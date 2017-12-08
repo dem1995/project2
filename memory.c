@@ -69,6 +69,7 @@ void printMemContents(memory mem)
 	for (block* b = mem.firstBlock; b != NULL; b = b->nextBlock)
 	{
 		printf("address of b is %i", b);
+		printf("address of b->nextBlock is %i", b);
 		printBlockContents(*b);
 	}
 }
