@@ -27,7 +27,7 @@ int main(int argc, char ** argv)
 	char* args[MAX_ARGS];		// pointers to arg strings
 	char** arg;					// working pointer thru args
 	char* prompt = "==>";		// prompt
-
+	char cwd[1024];
 
 
 
@@ -36,7 +36,7 @@ int main(int argc, char ** argv)
 		spaceToAllocate = atoi(argv[1]);
 	if (argc > 2)
 	{
-		char cwd[1024];
+		
 		getcwd(cwd, sizeof(cwd));		
 	}
 
@@ -48,7 +48,10 @@ int main(int argc, char ** argv)
 		if (argv[1][0] == '/')
 			shellInFP = fopen(argv[1], "r");
 		else
-			openFile(getenv("PWD"), argv[1], &shellInFP, "r");
+		{
+			printf("%s\n", cwd);
+			openFile(cwd, argv[1], &shellInFP, "r");
+		}
 		if (shellInFP == NULL)
 		{
 			shellInFP = stdin;
