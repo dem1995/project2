@@ -7,7 +7,13 @@ bool nextFitProcess(memory* mem, int size, char* label, int* nextFitCounter);
 
 int nextFitCounter;
 
-void main()
+
+int main(int argc, char ** argv) 
+{
+	if (argc>0)
+		printf(argv[1]);
+}
+void main2()
 {
 	printf("Creating memory of size 20\n");
 	memory mem = createMemory(20);
@@ -39,7 +45,7 @@ void main()
 	return 0;
 }
 
-void main2()
+void main3()
 {
 	printf("Creating memory of size 20\n");
 	memory mem = createMemory(20);
