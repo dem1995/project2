@@ -81,17 +81,20 @@ int main(int argc, char ** argv)
 				printf("args 1 is \"%s\"\n", args[1]);
 				printf("args 2 is \"%s\"\n", args[2]);
 
+				char* label = malloc(strlen(args[1]));
+				strcpy(label, args[1]);
+
 				if (strcmp(args[0], "REQUEST")==0)
 				{
 					printf("Request method: \n");
 					printMemContents(mem);
-					firstFitProcess(&mem, atoi(args[2]), args[1]);
+					firstFitProcess(&mem, atoi(args[2]), label);
 					printMemContents(mem);
 					printf("Request method ended. \n");
 				}
 				else if (strcmp(args[0], "RELEASE") == 0)
 				{
-					releaseProcess(&mem, args[1]);
+					releaseProcess(&mem, label);
 				}
 				else if (strcmp(args[0], "LIST") == 0)
 				{

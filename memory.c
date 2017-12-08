@@ -59,8 +59,8 @@ void freeMemory(memory mem)
 		
 		if (b != NULL)
 		{
-			//if (b->label != NULL)
-				//free(b->label);
+			if (b->label != NULL)
+				free(b->label);
 			free(b);
 		}
 
