@@ -7,10 +7,10 @@ void main()
 
 	memory mem = createMemory(20);
 
+
+	printMemContents(mem);
 	free(mem.firstBlock);
 	printf("hi");
-
-	//printMemContents(mem);
 	return 0;
 }
 
