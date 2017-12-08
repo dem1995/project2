@@ -87,7 +87,7 @@ void spawnProcess(memory* mem, block* theBlock, char* label, int processSize)
 		}
 		else
 		{
-			printf("8");
+			printf("8\n");
 			printBlockContents(*theBlock);
 			// say we have block t. a->t->z becomes a->newblock->t->z
 			block* prevBlockPointerCopy = theBlock->prevBlock;
@@ -95,6 +95,7 @@ void spawnProcess(memory* mem, block* theBlock, char* label, int processSize)
 			*(theBlock->prevBlock) = createProcess(processSize, label, prevBlockPointerCopy, theBlock);
 			theBlock->size -= processSize;
 			printBlockContents(*theBlock);
+			printf("8\n");
 		}
 		
 
