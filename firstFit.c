@@ -26,6 +26,12 @@ void main()
 	cleanMemory(mem);
 
 	printMemContents(mem);
+
+	printf("4\n");
+	bestFitProcess(&mem, 1, "harold");
+	printMemContents(mem);
+	printf("4\n");
+
 	freeMemory(mem);
 	return 0;
 }
