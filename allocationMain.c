@@ -1,8 +1,10 @@
 #include "memory.c"
 #include <stdlib.h>
 
-void firstFitProcess(memory* mem, int size, char* label);
+bool firstFitProcess(memory* mem, int size, char* label);
 bool bestFitProcess(memory* mem, int size, char* label);
+
+int nextFitCounter;
 
 void main()
 {
@@ -37,17 +39,17 @@ void main()
 }
 
 
-void firstFitProcess(memory* mem, int size, char* label)
+bool firstFitProcess(memory* mem, int size, char* label)
 {
 	for (block* b = mem->firstBlock; b != NULL; b = b->nextBlock)
 	{
 		if (b->size >= size && !(b->isProcess))
 		{
-			printMemContents(*mem);
 			spawnProcess(mem, b, label, size);
-			printMemContents(*mem);
+			return true;
 		}
 	}
+	return false;
 }
 
 bool bestFitProcess(memory* mem, int size, char* label)
@@ -73,6 +75,49 @@ bool bestFitProcess(memory* mem, int size, char* label)
 	else
 	{
 		spawnProcess(mem, bestFitBlock, label, size);
+		return true;
 	}
-	
+}
+
+bool nextFitProcess(memory* mem, int size, char* label, int* nextFitCounter)
+{
+	int origCounter = *nextFitCounter;
+
+	int locCounter=0;
+	//Check for indices greater than nextFitCounter
+	for (block* b = mem->firstBlock; b != NULL; b = b->nextBlock)
+	{
+		if (locCounter > *nextFitCounter)
+		{
+			*nextFitCounter = locCounter;
+
+			if (b->size >= size)
+			{
+				spawnProcess(mem, b, label, size);
+				return true;
+			}
+		}
+
+		locCounter += b->size;
+	}
+
+	int locCounter = 0;
+	for (block* b = mem->firstBlock; b != NULL && nextFitCounter<=origCounter; locCounter+=b->size, b = b->nextBlock)
+	{
+		if (locCounter > *nextFitCounter)
+		{
+			*nextFitCounter = locCounter;
+
+			if (b->size >= size)
+			{
+				spawnProcess(mem, b, label, size);
+				return true;
+			}
+		}
+
+		locCounter += b->size;
+	}
+
+	return false;
+	//Check for indices greater than the original value of nextFitCounter	
 }
