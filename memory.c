@@ -58,7 +58,7 @@ void freeMemory(memory mem)
 		{
 			//if (b->label != NULL)
 				//free(b->label);
-			//free(b);
+			free(b);
 		}
 
 		b = nextBlockPtrCopy;
