@@ -1,6 +1,8 @@
 #include "memory.c"
+#include "fileIOMethods.c"
 #include <stdlib.h>
 #include <unistd.h>
+
 
 
 #define MAX_BUFFER 1024 // max line buffer
