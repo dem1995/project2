@@ -50,7 +50,7 @@ int main(int argc, char ** argv)
 		else
 		{
 			printf("%s\n", cwd);
-			shellInFP = openFile(cwd, argv[1], &shellInFP, "r");
+			openFile(cwd, argv[1], &shellInFP, "r");
 		}
 		if (shellInFP == NULL)
 		{

@@ -29,6 +29,7 @@ bool openFile(const char* fileDirectory, const char* fileName, FILE** filePointe
 	strcpy(readmeFS, fileDirectory);
 	strcat(readmeFS, "/");
 	strcat(readmeFS, fileName);
+	printf(readmeFS);
 	*filePointer = fopen(readmeFS, streamAccessType);
 	free(readmeFS);
 }
