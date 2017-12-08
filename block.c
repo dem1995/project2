@@ -36,7 +36,7 @@ block createProcess(int size, char* label, block* prevBlock, block* nextBlock)
 	block newProcess = 
 	{
 		//.isProcess = false,
-		false,
+		true,
 		//.label = label,
 		label,
 		//.size = size,
