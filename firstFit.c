@@ -6,35 +6,27 @@ bool bestFitProcess(memory* mem, int size, char* label);
 
 void main()
 {
-	memory mem = createMemory(20);
-	
-	printMemContents(mem);
-	printf("1\n");
-	
-	/*char* label = malloc(4 * sizeof(char));
-	label = "fred";*/
-	firstFitProcess(&mem, 13, "fred");
-	
-	printMemContents(mem);
-	printf("2\n");
+	printf("Creating memory of size 21\n");
+	memory mem = createMemory(21);
 
+	printf("FirstFit adding size 13 fred\n");
+	firstFitProcess(&mem, 13, "fred");	
+	printMemContents(mem);
+
+	printf("FirstFit adding size 6 geore\n");
 	firstFitProcess(&mem, 6, "george");
-	
 	printMemContents(mem);
-	printf("3\n");
-
+	
+	printf("Releasing fred");
 	releaseProcess(&mem, "fred");
 	cleanMemory(mem);
-
 	printMemContents(mem);
 
-	printf("4\n");
+	printf("BestFit adding harold");
 	bestFitProcess(&mem, 1, "harold");
-	printf("3.5\n");
 	printMemContents(mem);
-	printf("3.5\n");
-	printf("4\n");
 
+	printf("End");
 	freeMemory(mem);
 	return 0;
 }
