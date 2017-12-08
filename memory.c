@@ -52,8 +52,13 @@ void freeMemory(memory mem)
 	for (block* b = mem.firstBlock; b != NULL;)
 	{
 		block* nextBlockPtrCopy = b->nextBlock;
-		free(b->label);
-		free(b);
+		if (b != NULL)
+			free(b);
+		{
+			if (b->label != NULL)
+				free(b->label);
+		}
+
 		b = nextBlockPtrCopy;
 	}
 }
