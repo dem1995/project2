@@ -1,5 +1,6 @@
 #include "memory.c"
 #include <stdlib.h>
+#include <unistd.h>
 
 bool firstFitProcess(memory* mem, int size, char* label);
 bool bestFitProcess(memory* mem, int size, char* label);
@@ -10,8 +11,16 @@ int nextFitCounter;
 
 int main(int argc, char ** argv) 
 {
-	if (argc>0)
-		printf(argv[1]);
+	int spaceToAllocate = 0;
+	if (argc > 0)
+		spaceToAllocate = atoi(argv[1]);
+
+	if (argc > 1)
+	{
+		char cwd[1024];
+		getcwd(cwd, sizeof(cwd));
+		printf(cwd);
+	}
 }
 void main2()
 {
