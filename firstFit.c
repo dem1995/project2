@@ -53,6 +53,7 @@ bool bestFitProcess(memory* mem, int size, char* label)
 	else
 	{
 		spawnProcess(mem, bestFitBlock, label, size);
+		printf(label);
 	}
 	
 }
