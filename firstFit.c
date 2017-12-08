@@ -20,13 +20,13 @@ void main()
 	printMemContents(mem);
 	printf("\n");
 	
-	printf("Releasing fred");
+	printf("Releasing fred\n");
 	releaseProcess(&mem, "fred");
 	cleanMemory(mem);
 	printMemContents(mem);
 	printf("\n");
 
-	printf("BestFit adding harold");
+	printf("BestFit adding harold\n");
 	bestFitProcess(&mem, 1, "harold");
 	printMemContents(mem);
 	printf("\n");

@@ -75,7 +75,11 @@ void spawnProcess(memory* mem, block* theBlock, char* label, int processSize)
 	else if (processSize == theBlock->size)
 	{
 
+		printf("before: ");
+		printMemContents(*mem);
 		*(mem->firstBlock) = createProcess(processSize, label, theBlock->prevBlock, theBlock->nextBlock);
+		printf("after: ");
+		printMemContents(*mem);
 		
 	}
 	else
