@@ -15,7 +15,7 @@ void main()
 
 	firstFitProcess(&mem, 6, "george");
 
-	releaseProcess(&mem, "fred");
+	//releaseProcess(&mem, "fred");
 	cleanMemory(mem);
 
 	printMemContents(mem);
@@ -28,7 +28,7 @@ void firstFitProcess(memory* mem, int size, char* label)
 {
 	for (block* b = mem->firstBlock; b != NULL; b = b->nextBlock)
 	{
-		if (b->size >= size)
+		if (b->size >= size && !(b->isProcess))
 		{
 			spawnProcess(mem, b, label, size);
 		}
