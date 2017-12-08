@@ -33,10 +33,9 @@ int main(int argc, char ** argv)
 
 	int spaceToAllocate = 0;
 	if (argc > 1)
-		spaceToAllocate = atoi(argv[1]);
+		spaceToAllocate = atoi(argv[2]);
 	if (argc > 2)
-	{
-		
+	{	
 		getcwd(cwd, sizeof(cwd));		
 	}
 
@@ -46,11 +45,11 @@ int main(int argc, char ** argv)
 	if (argv[2] != NULL)
 	{
 		if (argv[1][0] == '/')
-			shellInFP = fopen(argv[2], "r");
+			shellInFP = fopen(argv[3], "r");
 		else
 		{
 			printf("%s\n", cwd);
-			openFile(cwd, argv[2], &shellInFP, "r");
+			openFile(cwd, argv[3], &shellInFP, "r");
 		}
 		if (shellInFP == NULL)
 		{
@@ -78,7 +77,7 @@ int main(int argc, char ** argv)
 														 //if the user's input actually has things
 			if (args[0])
 			{
-				if (strcmp(args[0], "FIRSTFIT"))
+				if (strcmp(args[0], "FIRSTFIT")==0)
 				{
 					firstFitProcess(&mem, atoi(args[2]), args[1]);
 					printMemContents(mem);
