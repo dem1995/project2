@@ -6,14 +6,21 @@ void firstFitProcess(memory* mem, int size, char* label);
 void main()
 {
 	memory mem = createMemory(20);
-
+	
+	printMemContents(mem);
+	printf("1\n");
 	
 	/*char* label = malloc(4 * sizeof(char));
 	label = "fred";*/
 	firstFitProcess(&mem, 13, "fred");
-
+	
+	printMemContents(mem);
+	printf("2\n");
 
 	firstFitProcess(&mem, 6, "george");
+	
+	printMemContents(mem);
+	printf("3\n");
 
 	releaseProcess(&mem, "fred");
 	cleanMemory(mem);
