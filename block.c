@@ -69,7 +69,11 @@ int getRelativeLocation(block* b)
 void printBlockContents(block b)
 {
 
-	printf("(%s, %i, %i)", b.label, b.size, getRelativeLocation(&b));
+	if (b.isProcess)
+		printf("(%s, %i, %i)", b.label, b.size, getRelativeLocation(&b));
+	else
+		printf("(%i, %i)", b.size, getRelativeLocation(&b));
+	
 	/*
 	printf("Block of size %i. ", b.size);
 	if (b.isProcess)

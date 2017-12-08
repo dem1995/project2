@@ -12,7 +12,7 @@ typedef struct memory
 	block* firstBlock;
 }memory;
 
-void printMemContents(memory mem);
+void printAllMemContents(memory mem);
 
 memory createMemory(int size)
 {
@@ -76,10 +76,10 @@ void spawnProcess(memory* mem, block* theBlock, char* label, int processSize)
 	{
 
 		printf("before %s replacement: ", label);
-		printMemContents(*mem);
+		printAllMemContents(*mem);
 		*(theBlock) = createProcess(processSize, label, theBlock->prevBlock, theBlock->nextBlock);
 		printf("after %s replacement: ", label);
-		printMemContents(*mem);
+		printAllMemContents(*mem);
 		
 	}
 	else
@@ -119,21 +119,57 @@ void releaseProcess(memory* mem, char* label)
 			{
 				printf("removing: %s\n", b->label);
 				printf("before: ");
-				printMemContents(*mem);
+				printAllMemContents(*mem);
 				releaseBlock(b);
 				printf("after: ");
-				printMemContents(*mem);
+				printAllMemContents(*mem);
 			}
 	}
 }
 
-void printMemContents(memory mem)
+void printAllMemContents(memory mem)
 {
 	for (block* b = mem.firstBlock; b != NULL; b = b->nextBlock)
 	{
 		printBlockContents(*b);
 		printf("\n");
 	}
+}
+
+void printProcessMemContents(memory mem)
+{
+	bool areProcesses = false;
+	for (block* b = mem.firstBlock; b != NULL; b = b->nextBlock)
+	{
+		if (b->isProcess)
+		{
+			areProcesses = true;
+			printBlockContents(*b);
+		}
+	}
+
+	if (!areProcesses)
+		printf("NONE");
+	
+	printf("\n");
+}
+
+void printEmptyBlockMemContents(memory mem)
+{
+	bool areEmptyBlocks = false;
+	for (block* b = mem.firstBlock; b != NULL; b = b->nextBlock)
+	{
+		if (!(b->isProcess))
+		{
+			areEmptyBlocks = true;
+			printBlockContents(*b);
+		}
+	}
+
+	if (!areEmptyBlocks)
+		printf("FULL");
+
+	printf("\n");
 }
 
 

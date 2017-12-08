@@ -85,7 +85,7 @@ int main(int argc, char ** argv)
 				if (strcmp(args[0], "REQUEST")==0)
 				{
 					firstFitProcess(&mem, atoi(args[2]), label);
-					printMemContents(mem);
+					printAllMemContents(mem);
 				}
 				else if (strcmp(args[0], "RELEASE") == 0)
 				{
@@ -94,9 +94,9 @@ int main(int argc, char ** argv)
 				else if (strcmp(args[0], "LIST") == 0)
 				{
 					if (strcmp(args[1], "AVAILABLE") == 0)
-						printMemContents(mem);
-					else if (strcmp(args[1], "ASSIGNED")==0)
-						printMemContents(mem);
+						printEmptyBlockMemContents(mem);
+					else if (strcmp(args[1], "ASSIGNED") == 0)
+						printProcessMemContents(mem);
 				}
 				else if (strcmp(args[0], "FIND") == 0)
 				{
@@ -115,23 +115,23 @@ void main2()
 
 	printf("FirstFit adding size 13 fred\n");
 	firstFitProcess(&mem, 13, "fred");
-	printMemContents(mem);
+	printAllMemContents(mem);
 	printf("\n");
 
 	printf("NextFit adding size 6 geore\n");
 	nextFitProcess(&mem, 6, "george", &nextFitCounter);
-	printMemContents(mem);
+	printAllMemContents(mem);
 	printf("\n");
 
 	printf("Releasing fred\n");
 	releaseProcess(&mem, "fred");
 	cleanMemory(mem);
-	printMemContents(mem);
+	printAllMemContents(mem);
 	printf("\n");
 
 	printf("NextFit adding harold\n");
 	nextFitProcess(&mem, 1, "harold", &nextFitCounter);
-	printMemContents(mem);
+	printAllMemContents(mem);
 	printf("\n");
 
 	printf("End");
@@ -147,23 +147,23 @@ void main3()
 
 	printf("FirstFit adding size 13 fred\n");
 	firstFitProcess(&mem, 13, "fred");	
-	printMemContents(mem);
+	printAllMemContents(mem);
 	printf("\n");
 
 	printf("FirstFit adding size 6 geore\n");
 	firstFitProcess(&mem, 6, "george");
-	printMemContents(mem);
+	printAllMemContents(mem);
 	printf("\n");
 	
 	printf("Releasing fred\n");
 	releaseProcess(&mem, "fred");
 	cleanMemory(mem);
-	printMemContents(mem);
+	printAllMemContents(mem);
 	printf("\n");
 
 	printf("BestFit adding harold\n");
 	bestFitProcess(&mem, 1, "harold");
-	printMemContents(mem);
+	printAllMemContents(mem);
 	printf("\n");
 
 	printf("End");
