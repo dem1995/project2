@@ -30,7 +30,9 @@ void main()
 
 	printf("4\n");
 	bestFitProcess(&mem, 1, "harold");
+	printf("3.5\n");
 	printMemContents(mem);
+	printf("3.5\n");
 	printf("4\n");
 
 	freeMemory(mem);
@@ -67,7 +69,7 @@ bool bestFitProcess(memory* mem, int size, char* label)
 				if (minAccomodatingBlockSize < 0 || b->size < minAccomodatingBlockSize)
 				{
 					minAccomodatingBlockSize = b->size;
-					printf("Current min acc block size is %i", minAccomodatingBlockSize);
+					printf("Current min acc block size is %i\n", minAccomodatingBlockSize);
 					bestFitBlock = b;
 				}		
 	}
