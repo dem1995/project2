@@ -77,8 +77,12 @@ int main(int argc, char ** argv)
 														 //if the user's input actually has things
 			if (args[0])
 			{
+				printf("args 1 is \"%s\"\n", args[1]);
+				printf("args 2 is \"%s\"\n", args[2]);
+
 				if (strcmp(args[0], "REQUEST")==0)
 				{
+
 					firstFitProcess(&mem, atoi(args[2]), args[1]);
 					printMemContents(mem);
 				}
