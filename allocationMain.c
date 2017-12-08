@@ -75,7 +75,7 @@ int main(int argc, char ** argv)
 														 //if the user's input actually has things
 			if (args[0])
 			{
-				printf(args[0][0]);
+				printf(args[0]);
 			}
 		}
 	}
