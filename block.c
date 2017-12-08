@@ -50,6 +50,11 @@ block createProcess(int size, char* label, block* prevBlock, block* nextBlock)
 	return newProcess;
 }
 
+void releaseProcess(block* blockToRelease)
+{
+	(*blockToRelease) = createEmptyBlock(blockToRelease->size, blockToRelease->prevBlock, blockToRelease->nextBlock);
+}
+
 void printBlockContents(block b)
 {
 	printf("Block of size %i. ", b.size);

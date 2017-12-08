@@ -12,6 +12,11 @@ void main()
 	label = "fred";*/
 	firstFitProcess(&mem, 13, "fred");
 
+
+	firstFitProcess(&mem, 6, "george");
+
+	releaseProcess("fred");
+
 	printMemContents(mem);
 	freeMemory(mem);
 	return 0;

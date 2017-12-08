@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "block.c"
 
 
@@ -92,6 +93,18 @@ void spawnProcess(memory* mem, block* theBlock, char* label, int processSize)
 		}
 		
 
+	}
+}
+
+void releaseProcess(memory* mem, char* label)
+{
+	for (block* b = mem->firstBlock; b != NULL; b = b->nextBlock)
+	{
+		if (b->isProcess)
+			if (strcmp(b->label, label) == 0)
+			{
+
+			}
 	}
 }
 
