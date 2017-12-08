@@ -134,7 +134,7 @@ bool nextFitProcess(memory* mem, int size, char* label, int* nextFitCounter)
 		locCounter += b->size;
 	}
 
-	int locCounter = 0;
+	locCounter = 0;
 	for (block* b = mem->firstBlock; b != NULL && nextFitCounter<=origCounter; locCounter+=b->size, b = b->nextBlock)
 	{
 		if (locCounter > *nextFitCounter)
