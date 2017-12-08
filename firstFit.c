@@ -24,7 +24,7 @@ void firstFitProcess(memory* mem, int size, char* label)
 	{
 		if (b->size >= size)
 		{
-			spawnProcess(mem, b, NULL, size);
+			spawnProcess(mem, b, label, size);
 		}
 	}
 }
@@ -53,7 +53,6 @@ bool bestFitProcess(memory* mem, int size, char* label)
 	else
 	{
 		spawnProcess(mem, bestFitBlock, label, size);
-		printf(label);
 	}
 	
 }
