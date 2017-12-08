@@ -67,6 +67,7 @@ bool bestFitProcess(memory* mem, int size, char* label)
 				if (minAccomodatingBlockSize < 0 || b->size < minAccomodatingBlockSize)
 				{
 					minAccomodatingBlockSize = b->size;
+					printf("Current min acc block size is %i", minAccomodatingBlockSize);
 					bestFitBlock = b;
 				}		
 	}
