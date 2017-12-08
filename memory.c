@@ -17,16 +17,16 @@ void printMemContents(memory mem);
 memory createMemory(int size)
 {
 	//This is some janky initialization syntax
-	memory newMemory;
-	newMemory.totalMemory = size;
-	newMemory.freeMemory = size;
-	newMemory.firstBlock = malloc(sizeof(block));
+	memory newMemory = {
+		//.totalMemory = size,
+		size,
+		//.freeMemory = size,
+		size,
+		//.firstBlock = malloc(sizeof(block))
+		malloc(sizeof(block))
+	};
+
 	*(newMemory.firstBlock) = createEmptyBlock(size, NULL, NULL);
-	/*{
-		.totalMemory = size,
-		.freeMemory = size,
-		.firstBlock = createEmptyBlock(size, NULL, NULL)
-	};*/
 
 	return newMemory;
 }
@@ -91,8 +91,6 @@ void spawnProcess(memory* mem, block* theBlock, char* label, int processSize)
 		}
 		else
 		{
-			printf("8\n");
-			printBlockContents(*theBlock);
 			// say we have block t. a->t->z becomes a->newblock->t->z
 			block* prevBlockPointerCopy = theBlock->prevBlock;
 			theBlock->prevBlock = malloc(sizeof(block));
@@ -102,8 +100,6 @@ void spawnProcess(memory* mem, block* theBlock, char* label, int processSize)
 			prevBlockPointerCopy->nextBlock = (theBlock->prevBlock);
 
 			theBlock->size -= processSize;
-			printBlockContents(*theBlock);
-			printf("8\n");
 		}
 		
 

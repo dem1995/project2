@@ -43,12 +43,9 @@ void firstFitProcess(memory* mem, int size, char* label)
 	{
 		if (b->size >= size && !(b->isProcess))
 		{
-			printf("writing over %s\n", b->label);
 			printMemContents(*mem);
-			printf("7\n");
 			spawnProcess(mem, b, label, size);
 			printMemContents(*mem);
-			printf("7\n");
 		}
 	}
 }
@@ -66,7 +63,6 @@ bool bestFitProcess(memory* mem, int size, char* label)
 				if (minAccomodatingBlockSize < 0 || b->size < minAccomodatingBlockSize)
 				{
 					minAccomodatingBlockSize = b->size;
-					printf("Current min acc block size is %i\n", minAccomodatingBlockSize);
 					bestFitBlock = b;
 				}		
 	}
