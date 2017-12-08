@@ -50,7 +50,7 @@ block createProcess(int size, char* label, block* prevBlock, block* nextBlock)
 	return newProcess;
 }
 
-void releaseProcess(block* blockToRelease)
+void releaseBlock(block* blockToRelease)
 {
 	(*blockToRelease) = createEmptyBlock(blockToRelease->size, blockToRelease->prevBlock, blockToRelease->nextBlock);
 }

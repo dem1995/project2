@@ -103,7 +103,7 @@ void releaseProcess(memory* mem, char* label)
 		if (b->isProcess)
 			if (strcmp(b->label, label) == 0)
 			{
-
+				releaseBlock(b);
 			}
 	}
 }
