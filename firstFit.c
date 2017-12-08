@@ -22,7 +22,7 @@ void firstFitProcess(memory* mem, int size)
 	{
 		if (b->size >= size)
 		{
-			spawnProcess(&mem,b, "", size);
+			spawnProcess(mem, b, "", size);
 		}
 	}
 }
