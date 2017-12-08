@@ -132,6 +132,7 @@ void printMemContents(memory mem)
 	for (block* b = mem.firstBlock; b != NULL; b = b->nextBlock)
 	{
 		printBlockContents(*b);
+		printf("\n");
 	}
 }
 

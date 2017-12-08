@@ -55,12 +55,30 @@ void releaseBlock(block* blockToRelease)
 	(*blockToRelease) = createEmptyBlock(blockToRelease->size, blockToRelease->prevBlock, blockToRelease->nextBlock);
 }
 
+int getRelativeLocation(block* b)
+{
+	int i = 0;
+	for (block* c = b->prevBlock; c != NULL; c = c->prevBlock)
+	{
+		i += (c->size);
+	}
+
+	return i;
+}
+
 void printBlockContents(block b)
 {
+
+	printf("(%s, %i, %i)", b.label, b.size, getRelativeLocation(&b));
+	/*
 	printf("Block of size %i. ", b.size);
 	if (b.isProcess)
 		printf("Block is process of name %s", b.label);
 	else
 		printf("Block is not a process.");
 	printf("\n");
+	*/
+
 }
+
+
