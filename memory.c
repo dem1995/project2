@@ -103,7 +103,12 @@ void releaseProcess(memory* mem, char* label)
 		if (b->isProcess)
 			if (strcmp(b->label, label) == 0)
 			{
+				printf("removing: %s\n", b->label);
+				printf("before: ");
+				printMemContents(*mem);
 				releaseBlock(b);
+				printf("after: ");
+				printMemContents(*mem);
 			}
 	}
 }
