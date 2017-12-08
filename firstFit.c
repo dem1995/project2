@@ -2,6 +2,8 @@
 
 void main()
 {
+	printf("hi");
+
 	memory mem = createMemory(20);
 
 	printf("hi");
