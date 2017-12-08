@@ -10,7 +10,7 @@ void main()
 	
 	firstFitProcess(&mem, 13);
 
-
+	printMemContents(mem);
 	freeMemory(mem);
 	return 0;
 }
