@@ -1,14 +1,16 @@
 #include "memory.c"
 #include <stdlib.h>
 
-void firstFitProcess(memory* mem, int size);
+void firstFitProcess(memory* mem, int size, char* label);
 
 void main()
 {
 	memory mem = createMemory(20);
 
 	
-	firstFitProcess(&mem, 13);
+	/*char* label = malloc(4 * sizeof(char));
+	label = "fred";*/
+	firstFitProcess(&mem, 13, "fred");
 
 	printMemContents(mem);
 	freeMemory(mem);
@@ -16,18 +18,18 @@ void main()
 }
 
 
-void firstFitProcess(memory* mem, int size)
+void firstFitProcess(memory* mem, int size, char* label)
 {
 	for (block* b = mem->firstBlock; b != NULL; b = b->nextBlock)
 	{
 		if (b->size >= size)
 		{
-			spawnProcess(mem, b, "", size);
+			spawnProcess(mem, b, NULL, size);
 		}
 	}
 }
 
-bool bestFitProcess(memory* mem, int size)
+bool bestFitProcess(memory* mem, int size, char* label)
 {
 	int minAccomodatingBlockSize = -1;
 	block* bestFitBlock = NULL;
@@ -50,7 +52,7 @@ bool bestFitProcess(memory* mem, int size)
 		return false;
 	else
 	{
-		spawnProcess(mem, bestFitBlock, "", size);
+		spawnProcess(mem, bestFitBlock, label, size);
 	}
 	
 }
