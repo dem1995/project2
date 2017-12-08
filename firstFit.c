@@ -6,21 +6,21 @@ void main()
 	memory mem = createMemory(20);
 
 	
-	spawnProcess(&mem, mem.firstBlock, "32", 15);
+	firstFitProcess(&mem, 13);
 
-	printMemContents(mem);
+
 	freeMemory(mem);
 	return 0;
 }
 
 
-void firstFitProcess(memory* mem, block* blo)
+void firstFitProcess(memory* mem, int size)
 {
 	for (block* b = mem->firstBlock; b != NULL; b = b->nextBlock)
 	{
-		if (b->size >= blo->size)
+		if (b->size >= size)
 		{
-			//spawnProcess(mem, blo, )
+			spawnProcess(&mem,b, "", size);
 		}
 	}
 }
