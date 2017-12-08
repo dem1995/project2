@@ -2,26 +2,82 @@
 #include <stdlib.h>
 #include <unistd.h>
 
+
+#define MAX_BUFFER 1024 // max line buffer
+#define MAX_ARGS 64 // max # args
+#define SEPARATORS " \t\n" // token sparators
+
+#define KCYN  "\x1B[36m"	//Cyan text
+#define RESET "\x1B[0m"	//Reset text color
+
 bool firstFitProcess(memory* mem, int size, char* label);
 bool bestFitProcess(memory* mem, int size, char* label);
 bool nextFitProcess(memory* mem, int size, char* label, int* nextFitCounter);
 
 int nextFitCounter;
+FILE* shellInFP = NULL;
+
 
 
 int main(int argc, char ** argv) 
 {
+	char buf[MAX_BUFFER];		// line buffer
+	char* args[MAX_ARGS];		// pointers to arg strings
+	char** arg;					// working pointer thru args
+	char* prompt = "==>";		// prompt
+
+
+
+
 	int spaceToAllocate = 0;
 	if (argc > 1)
 		spaceToAllocate = atoi(argv[1]);
-
 	if (argc > 2)
 	{
 		char cwd[1024];
-		getcwd(cwd, sizeof(cwd));
-		printf(cwd);
-		printf("%s", argv[2]);
+		getcwd(cwd, sizeof(cwd));		
 	}
+
+
+
+
+	if (argv[2] != NULL)
+	{
+		if (argv[1][0] == '/')
+			shellInFP = fopen(argv[1], "r");
+		else
+			openFile(getenv("PWD"), argv[1], &shellInFP, "r");
+		if (shellInFP == NULL)
+		{
+			shellInFP = stdin;
+			fprintf(stdout, "There was a problem opening the batch file. Reverting to using standard input.");
+		}
+	}
+
+	/* Now for input readin. Keep reading input until "quit" command or eof of redirected input */
+	while (!feof(shellInFP)) {
+
+		//Prints the current directory to stdout
+		if (shellInFP == stdin)
+			fprintf(stdout, KCYN"%s"RESET"%s ", getenv("PWD"), prompt); //write prompt
+
+																			/*Interpret input (executing commands, etc.)*/
+		if (fgets(buf, MAX_BUFFER, shellInFP)) //read a line
+		{
+
+			/*TOKENIZING THE INPUT*/
+			arg = args;
+			*arg++ = strtok(buf, SEPARATORS);
+			while ((*arg++ = strtok(NULL, SEPARATORS))); // last entry will be NULL	
+
+														 //if the user's input actually has things
+			if (args[0])
+			{
+				printf(args[0][0]);
+			}
+		}
+	}
+
 }
 void main2()
 {
