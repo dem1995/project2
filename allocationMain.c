@@ -77,10 +77,25 @@ int main(int argc, char ** argv)
 														 //if the user's input actually has things
 			if (args[0])
 			{
-				if (strcmp(args[0], "FIRSTFIT")==0)
+				if (strcmp(args[0], "REQUEST")==0)
 				{
 					firstFitProcess(&mem, atoi(args[2]), args[1]);
 					printMemContents(mem);
+				}
+				else if (strcmp(args[0], "RELEASE") == 0)
+				{
+					releaseProcess(&mem, args[1]);
+				}
+				else if (strcmp(args[0], "LIST") == 0)
+				{
+					if (strcmp(args[1], "AVAILABLE") == 0)
+						printMemContents(mem);
+					else if (strcmp(args[1], "ASSIGNED")==0)
+						printMemContents(mem);
+				}
+				else if (strcmp(args[0], "FIND") == 0)
+				{
+					;
 				}
 			}
 		}
