@@ -6,9 +6,10 @@ void main()
 
 	memory mem = createMemory(20);
 
+	free(mem);
 	printf("hi");
 
-	printMemContents(mem);
+	//printMemContents(mem);
 	return 0;
 }
 

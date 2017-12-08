@@ -16,6 +16,7 @@ memory createMemory(int size)
 	memory newMemory;
 	newMemory.totalMemory = size;
 	newMemory.freeMemory = size;
+	newMemory.firstBlock = malloc(sizeof(block));
 	*(newMemory.firstBlock) = createEmptyBlock(size, NULL, NULL);
 	/*{
 		.totalMemory = size,
