@@ -8,8 +8,8 @@
 
 typedef struct memory
 {
-	unsigned long totalMemory;	
-	block* firstBlock;
+	unsigned long totalMemory;	//The total number of bytes this memory structure represents
+	block* firstBlock;			//The first Block in memory (left-most, if it exists it always has relative position 0).
 }memory;
 
 void printAllMemContents(memory mem);
@@ -97,16 +97,6 @@ block* spawnProcess(memory* mem, block* theBlock, char* label, unsigned long pro
 		}
 		else
 		{
-			//// say we have block t. a->t->z becomes a->newblock->t->z
-
-			////malloc space for the process and set it as the next block of the previous block
-			//theBlock->prevBlock->nextBlock = malloc(sizeof(block));
-
-			////create the process
-			//*(theBlock->prevBlock) = createProcess(processSize, label, theBlock->prevBlock, theBlock);
-
-			////re-create the current proces 
-			//*theBlock = createEmptyBlock(theBlock->size - processSize, theBlock->prevBlock->nextBlock, theBlock->nextBlock);
 
 			// say we have block t. a->t->z becomes a->newblock->t->z
 			block* prevBlockPointerCopy = theBlock->prevBlock;

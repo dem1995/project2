@@ -6,15 +6,16 @@
 
 typedef struct block
 {
-	bool isProcess;	//whether the block is given to a process or not
-	char* label;	//if the block is a process, the process name
-	unsigned long size;		//the number of bytes the block has
-	unsigned long location;
-	struct block* prevBlock;
-	struct block* nextBlock;
+	bool isProcess;				//Whether the block is a process (non-free)
+	char* label;				//If the block is a process, this is the associated program name
+	unsigned long size;			//The number of bytes in the block
+	unsigned long location;		//The relative location of this block within the memory struct instance that contains it.
+	struct block* prevBlock;	//A pointer to the previous block in memory. If there is none, this is a null pointer.
+	struct block* nextBlock;	//A pointer to the next block in memory. If there is none, this is a null pointer.
 }block;
 
 
+//Creates a non-process block with /size/ bytes
 block createEmptyBlock(unsigned long size, block* prevBlock, block* nextBlock)
 {
 	block newBlock =
@@ -36,6 +37,7 @@ block createEmptyBlock(unsigned long size, block* prevBlock, block* nextBlock)
 	return newBlock;
 }
 
+//Creates a process block named /label/ with /size/ bytes
 block createProcess(unsigned long size, char* label, block* prevBlock, block* nextBlock)
 {
 	//Might get some string pointer errors here
@@ -58,8 +60,11 @@ block createProcess(unsigned long size, char* label, block* prevBlock, block* ne
 	return newProcess;
 }
 
+/*Converts a process block to a non-process block, simulating releasing memory*/
 void releaseBlock(block* blockToRelease)
 {
+	if (blockToRelease->label!=NULL)
+		free(blockToRelease->label);
 	(*blockToRelease) = createEmptyBlock(blockToRelease->size, blockToRelease->prevBlock, blockToRelease->nextBlock);
 }
 

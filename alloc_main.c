@@ -10,10 +10,6 @@
 #define MAX_ARGS 64 // max # args
 #define SEPARATORS " \t\n" // token sparators
 
-#define KCYN  "\x1B[36m"	//Cyan text
-#define RESET "\x1B[0m"	//Reset text color
-
-unsigned long nextFitCounter = 0;
 
 int main(int argc, char ** argv)
 {
@@ -24,13 +20,18 @@ int main(int argc, char ** argv)
 	char cwd[1024];
 	getcwd(cwd, sizeof(cwd));
 
-	bool showCommands = false;
+	bool showCommands = false;			//Whether to show lines from the command input file
+	unsigned long nextFitCounter = 0;	//An unsigned long tracker for use with NextFit
 
+
+	//Check to see if the user's calling with enough parameters.
 	if (argc < 4)
 	{
 		printf("Not enough arguments\n");
 		return -1;
 	}
+
+	//Debug option. Displays lines from the command input file.
 	if (argc >= 5)
 	{
 		if (strcmp(argv[4], "-showYourMoves") == 0)
@@ -39,13 +40,13 @@ int main(int argc, char ** argv)
 		}
 	}
 
-	//Fit Algorithm Type, space to allocate in memory, filename to draw commands from
+	//Memory Algorithm Type, space to allocate in memory, filename to draw commands from.
 	char* fitAlgoChoice = NULL;
 	unsigned long spaceToAllocate = 0;
 	char* fileName = NULL;
 	FILE* shellInFP = NULL;
 
-	//If we have enough arguments, get things going; otherwise, end the program
+	//If we have enough arguments, get things going; otherwise, end the program.
 	fitAlgoChoice = argv[1];
 	spaceToAllocate = strtoul(argv[2], NULL, 10);
 	fileName = argv[3];
@@ -54,7 +55,7 @@ int main(int argc, char ** argv)
 	memory mem = createMemory(spaceToAllocate);
 
 
-	//Open a file pointer to the file to read from
+	//Open a file pointer to the file to read from.
 	if (fileName[0] == '/')
 		shellInFP = fopen(fileName, "r");
 	else
@@ -68,29 +69,34 @@ int main(int argc, char ** argv)
 	while (!feof(shellInFP)) 
 	{
 		/*Interpret input (executing commands, etc.)*/
-
-		if (fgets(buf, MAX_BUFFER, shellInFP)) //read a line
+		//read a line
+		if (fgets(buf, MAX_BUFFER, shellInFP)) 
 		{
 			/*TOKENIZING THE INPUT*/
 			arg = args;
 			*arg++ = strtok(buf, SEPARATORS);
-			while ((*arg++ = strtok(NULL, SEPARATORS))); // last entry will be NULL	
+			// last entry will be NULL	
+			while ((*arg++ = strtok(NULL, SEPARATORS)));
 
 			//if the input actually has things
 			if (args[0])
 			{
+				//Debug printing
 				if (showCommands)
-					printf("%s %s %s\n", args[0], args[1], args[2]);
-
-				char* label = malloc(strlen(args[1]));
-				strcpy(label, args[1]);
+					if (args[0]!=NULL)
+						if (args[0][0]!='#')
+							printf("%s %s %s\n", args[0], args[1], args[2]);
+				
+				//Allocate space for the process name
+				char* label = args[1];
+				
 
 				/*REQUEST*/
 				if (strcmp(args[0], "REQUEST") == 0)
 				{
-
 					unsigned long size = strtoul(args[2], NULL, 10);
 					block* spawnedProcess = NULL;
+					label = strcpy(malloc(strlen(args[1])), label);
 
 					if (strcmp(fitAlgoChoice, "FIRSTFIT") == 0)
 						spawnedProcess = firstFitProcess(&mem, size, label);
@@ -104,8 +110,8 @@ int main(int argc, char ** argv)
 						printf("ALLOCATED %s %lu\n", label, spawnedProcess->location);
 					else
 						printf("FAIL REQUEST %s %lu\n", label, size);
-
 				}
+
 				/*RELEASE*/
 				else if (strcmp(args[0], "RELEASE") == 0)
 				{
@@ -140,9 +146,11 @@ int main(int argc, char ** argv)
 		}
 	}
 
+	//Close the command input file stream
 	if (shellInFP != NULL)
 		fclose(shellInFP);
 
+	//Free the contents of memory
 	freeMemory(mem);
 }
 
