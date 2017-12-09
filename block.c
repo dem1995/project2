@@ -9,7 +9,7 @@ typedef struct block
 	bool isProcess;
 	char* label;
 	int size;
-
+	;
 	int location;
 	struct block* prevBlock;
 	struct block* nextBlock;
