@@ -150,6 +150,14 @@ int main(int argc, char ** argv)
 	if (shellInFP != NULL)
 		fclose(shellInFP);
 
+	//"Free" the contents of memory
+	for (block* b = mem.firstBlock; b != NULL;)
+	{
+		block* bcopy = b->nextBlock;
+		releaseBlock(b);
+		b = bcopy;
+	}
+
 	//Free the contents of memory
 	freeMemory(mem);
 }
