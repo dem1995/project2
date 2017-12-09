@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
+#include <stdlib.h>
+
 /*
 *A class for defining methods that pertain to FILE manipulation
 */
