@@ -148,4 +148,4 @@ int main(int argc, char ** argv)
 		fclose(shellInFP);
 }
 
-#endif ALLOC_MAIN_C
+#endif //ALLOC_MAIN_C

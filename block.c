@@ -75,4 +75,4 @@ void printBlockContents(block b)
 	
 }
 
-#endif BLOCK_C
+#endif //BLOCK_C

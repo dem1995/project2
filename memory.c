@@ -184,4 +184,4 @@ void printEmptyBlockMemContents(memory mem)
 	printf("\n");
 }
 
-#endif MEMORY_C
+#endif //MEMORY_C

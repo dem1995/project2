@@ -39,4 +39,4 @@ bool openFile(const char* fileDirectory, const char* fileName, FILE** filePointe
 	free(readmeFS);
 }
 
-#endif FILEIO_C
+#endif //FILEIO_C

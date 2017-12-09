@@ -113,4 +113,4 @@ bool buddyFit(memory* mem, int size, char* label)
 
 }
 */
-#endif FIT_ALGOS_C
+#endif //FIT_ALGOS_C
