@@ -97,7 +97,15 @@ int main(int argc, char ** argv)
 				}
 				else if (strcmp(args[0], "RELEASE") == 0)
 				{
-					releaseProcess(&mem, label);
+					block* b = findBlock(&mem, label);
+					if (b == NULL)
+						printf("FAIL RELEASE %s", label);
+					else
+					{
+						printf("FREE %s %i %i", label, b->size, getRelativeLocation(b));
+						releaseBlock(b);
+						cleanMemory(mem);
+					}
 				}
 				else if (strcmp(args[0], "LIST") == 0)
 				{

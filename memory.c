@@ -110,22 +110,18 @@ void spawnProcess(memory* mem, block* theBlock, char* label, int processSize)
 	}
 }
 
-void releaseProcess(memory* mem, char* label)
+block* findBlock(memory* mem, char* label)
 {
 	for (block* b = mem->firstBlock; b != NULL; b = b->nextBlock)
 	{
 		if (b->isProcess)
 			if (strcmp(b->label, label) == 0)
 			{
-				printf("removing: %s\n", b->label);
-				printf("before: ");
-				printAllMemContents(*mem);
-				releaseBlock(b);
-				printf("after: ");
-				printAllMemContents(*mem);
+				return b;
 			}
 	}
-	cleanMemory(*mem);
+
+	return NULL;
 }
 
 void printAllMemContents(memory mem)
