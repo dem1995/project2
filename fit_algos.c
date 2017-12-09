@@ -108,7 +108,7 @@ block* buddyFitProcess(memory* mem, unsigned long size, char* label)
 
 	}
 
-	block* spawnedProcess = spawnProcess(blockToBreak, size);
+	block* spawnedProcess = spawnProcess(blockToBreak, label, size);
 
 	return spawnedProcess;
 }
