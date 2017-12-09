@@ -53,7 +53,7 @@ bool nextFitProcess(memory* mem, int size, char* label, int* nextFitCounter)
 	{
 		if (currentMemIndex > *nextFitCounter)
 		{
-			if (b->size >= size)
+			if (b->size >= size && !(b->isProcess))
 			{
 				spawnProcess(mem, b, label, size);
 				cleanMemory(*mem);
@@ -71,7 +71,7 @@ bool nextFitProcess(memory* mem, int size, char* label, int* nextFitCounter)
 	{
 		if (currentMemIndex <= *nextFitCounter)
 		{
-			if (b->size >= size)
+			if (b->size >= size && !(b->isProcess))
 			{
 				spawnProcess(mem, b, label, size);
 				cleanMemory(*mem);
