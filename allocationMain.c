@@ -92,18 +92,18 @@ int main(int argc, char ** argv)
 				if (strcmp(args[0], "REQUEST") == 0)
 				{
 					int size = atoi(args[2]);
-					bool succeeded = false;
+					block* spawnedProcess = NULL;
 
 					if (strcmp(fitAlgoChoice, "FIRSTFIT") == 0)
-						succeeded = firstFitProcess(&mem, size, label);
+						spawnedProcess = firstFitProcess(&mem, size, label);
 					else if (strcmp(fitAlgoChoice, "BESTFIT") == 0)
-						succeeded = bestFitProcess(&mem, size, label);
+						spawnedProcess = bestFitProcess(&mem, size, label);
 					else if (strcmp(fitAlgoChoice, "NEXTFIT") == 0)
-						succeeded = nextFitProcess(&mem, size, label, &nextFitCounter);
+						spawnedProcess = nextFitProcess(&mem, size, label, &nextFitCounter);
 					else if (strcmp(fitAlgoChoice, "BUDDY") == 0)
 						printf("Buddy");
-					if (succeeded)
-						printf("ALLOCATED %s %i\n", label, nextFitCounter);
+					if (spawnedProcess!=NULL)
+						printf("ALLOCATED %s %i\n", label, spawnedProcess->location);
 					else
 						printf("FAIL REQUEST %s %i\n", label, size);
 

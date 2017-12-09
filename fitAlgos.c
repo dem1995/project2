@@ -1,7 +1,7 @@
 #include "memory.c"
 
 
-bool firstFitProcess(memory* mem, int size, char* label)
+block* firstFitProcess(memory* mem, int size, char* label)
 {
 	for (block* b = mem->firstBlock; b != NULL; b = b->nextBlock)
 	{
@@ -9,13 +9,13 @@ bool firstFitProcess(memory* mem, int size, char* label)
 		{
 			spawnProcess(mem, b, label, size);
 			cleanMemory(*mem);
-			return true;
+			return b;
 		}
 	}
-	return false;
+	return NULL;
 }
 
-bool bestFitProcess(memory* mem, int size, char* label)
+block* bestFitProcess(memory* mem, int size, char* label)
 {
 	int minAccomodatingBlockSize = -1;
 	block* bestFitBlock = NULL;
@@ -34,12 +34,12 @@ bool bestFitProcess(memory* mem, int size, char* label)
 
 	//If there were no sufficiently-large blocks
 	if (minAccomodatingBlockSize < 0)
-		return false;
+		return NULL;
 	else
 	{
 		spawnProcess(mem, bestFitBlock, label, size);
 		cleanMemory(*mem);
-		return true;
+		return bestFitBlock;
 	}
 }
 
@@ -84,7 +84,7 @@ bool bestFitProcess(memory* mem, int size, char* label)
 //	return false;
 //	//Check for indices greater than the original value of nextFitCounter	
 //}
-bool nextFitProcess(memory* mem, int size, char* label, int* nextFitCounter)
+block* nextFitProcess(memory* mem, int size, char* label, int* nextFitCounter)
 {
 
 	int currentMemIndex = 0;
@@ -100,7 +100,7 @@ bool nextFitProcess(memory* mem, int size, char* label, int* nextFitCounter)
 				cleanMemory(*mem);
 				*nextFitCounter = currentMemIndex;
 				//printf("curMemIndex: %i, b->location: %i\n", currentMemIndex, b->location);
-				return true;
+				return b;
 			}
 		}
 		//Increment (to track) the current index of memory
@@ -119,7 +119,7 @@ bool nextFitProcess(memory* mem, int size, char* label, int* nextFitCounter)
 				cleanMemory(*mem);
 				*nextFitCounter = currentMemIndex;
 				//printf("curMemIndex: %i, b->location: %i\n", currentMemIndex, b->location);
-				return true;
+				return b;
 			}
 		}
 		//If we've passed the original cursor location, then there's no room in memory for this process.
@@ -129,7 +129,7 @@ bool nextFitProcess(memory* mem, int size, char* label, int* nextFitCounter)
 		currentMemIndex += b->size;
 	}
 
-	return false;
+	return NULL;
 	//Check for indices greater than the original value of nextFitCounter	
 }
 
