@@ -91,16 +91,26 @@ void spawnProcess(memory* mem, block* theBlock, char* label, int processSize)
 		}
 		else
 		{
+			//// say we have block t. a->t->z becomes a->newblock->t->z
+
+			////malloc space for the process and set it as the next block of the previous block
+			//theBlock->prevBlock->nextBlock = malloc(sizeof(block));
+
+			////create the process
+			//*(theBlock->prevBlock) = createProcess(processSize, label, theBlock->prevBlock, theBlock);
+
+			////re-create the current proces 
+			//*theBlock = createEmptyBlock(theBlock->size - processSize, theBlock->prevBlock->nextBlock, theBlock->nextBlock);
+
 			// say we have block t. a->t->z becomes a->newblock->t->z
+			block* prevBlockPointerCopy = theBlock->prevBlock;
+			theBlock->prevBlock = malloc(sizeof(block));
+			*(theBlock->prevBlock) = createProcess(processSize, label, prevBlockPointerCopy, theBlock);
 
-			//malloc space for the process and set it as the next block of the previous block
-			theBlock->prevBlock->nextBlock = malloc(sizeof(block));
+			//set the nextBlock of the block 2 before this one to this one
+			prevBlockPointerCopy->nextBlock = (theBlock->prevBlock);
 
-			//create the process
-			*(theBlock->prevBlock) = createProcess(processSize, label, theBlock->prevBlock, theBlock);
-
-			//re-create the current proces 
-			*theBlock = createEmptyBlock(theBlock->size - processSize, theBlock->prevBlock->nextBlock, theBlock->nextBlock);
+			theBlock->size -= processSize;
 
 		}
 		
