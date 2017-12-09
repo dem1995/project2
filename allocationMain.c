@@ -78,7 +78,7 @@ int main(int argc, char ** argv)
 														 //if the user's input actually has things
 			if (args[0])
 			{
-				printf("%s_%s_%s\n", args[0], args[1], args[2]);
+				//printf("%s_%s_%s\n", args[0], args[1], args[2]);
 
 				char* label = malloc(strlen(args[1]));
 				strcpy(label, args[1]);
@@ -99,10 +99,10 @@ int main(int argc, char ** argv)
 				{
 					block* b = findBlock(&mem, label);
 					if (b == NULL)
-						printf("FAIL RELEASE %s", label);
+						printf("FAIL RELEASE %s\n", label);
 					else
 					{
-						printf("FREE %s %i %i", label, b->size, getRelativeLocation(b));
+						printf("FREE %s %i %i\n", label, b->size, getRelativeLocation(b));
 						releaseBlock(b);
 						cleanMemory(mem);
 					}
@@ -116,7 +116,11 @@ int main(int argc, char ** argv)
 				}
 				else if (strcmp(args[0], "FIND") == 0)
 				{
-					;
+					block* b = findBlock(&mem, label);
+					if (b == NULL)
+						printf("Process %s not found\n", label);
+					else
+						printf("(%s %i %i)\n", label, b->size, getRelativeLocation(b));
 				}
 			}
 		}

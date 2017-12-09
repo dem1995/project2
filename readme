@@ -1,0 +1,41 @@
+/*MEMORY*/
+The memory struct simulates computer memory. It contains:
+	int totalMemory;	//The total allocated memory
+	int freeMemory;		//The current amount of free memory
+	block* firstBlock;	//The first block of memory
+
+/*BLOCK*/
+Blocks simulate blocks of memory and processes. 
+Blocks are either designated processes (memory allocated to processes) or non-processes (free memory).
+Blocks contain
+	bool isProcess;			//Whether the block is a process (non-free)
+	char* label;			//If the block is a process, this is the associated program name
+	int size;				//The number of bytes in the block
+	struct block* prevBlock;//A pointer to the previous block in memory. If there is none, this is a null pointer.
+	struct block* nextBlock;//A pointer to the next block in memory. If there is none, this is a null pointer.
+
+/*FIRSTFIT*/
+FirstFit attempts to fit a process into memory as early as possible. To this effect, it runs through memory starting with memory->firstBlock and follows the chain of pointers to next blocks until there is a block with enough space for a process of the user-designated size.
+
+/*NEXTFIT*/
+NextFit keeps a sort of cursor, tracking where in memory the previous call to NextFit left off (by default this is the first address of memory). When called, it travels from that point sequentially through memory until it encounters a block with enough space.
+
+/*BESTFIT*/
+BestFit looks at all the blocks of memory and finds the first block with the smallest amount of memory such that the designated process can fit, then spawns that process in that block.
+
+/*LIST [AVAILABLE/UNAVAILABLE]*/
+Lists the available/unavailable blocks of memory (designated by whether they are processes).
+
+/*RELEASE*/
+Releases a block,setting isProcess to false and label to NULL.
+
+/*FIND [LABEL]*/
+Finds and returns a block with the given label, and prints info about it.
+
+/*INCLUDES*/
+I included
+stdbool.h, for defining booleans
+stdlib.h, for atoi, malloc, free, and NULL, 
+unistd.h, for getcwd and NULL
+string.h, for strlen, strcpy, and strcmp
+stdio.h, for input, output, and FILE.
