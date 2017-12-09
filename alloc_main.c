@@ -59,10 +59,7 @@ int main(int argc, char ** argv)
 	if (fileName[0] == '/')
 		shellInFP = fopen(fileName, "r");
 	else
-	{
-		printf("%s\n", cwd);
 		openFile(cwd, fileName, &shellInFP, "r");
-	}
 
 
 	/* Now for input readin.*/
