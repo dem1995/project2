@@ -132,7 +132,7 @@ int main(int argc, char ** argv)
 					if (b == NULL)
 						printf("Process %s not found\n", label);
 					else
-						printf("(%s %i %i)\n", label, b->size, b->location);
+						printf("(%s, %i, %i)\n", label, b->size, b->location);
 				}
 			}
 		}
