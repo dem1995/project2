@@ -16,7 +16,6 @@ void printAllMemContents(memory mem);
 
 memory createMemory(unsigned long size)
 {
-	//This is some janky initialization syntax
 	memory newMemory = {
 		//.totalMemory = size,
 		size,

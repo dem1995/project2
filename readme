@@ -1,41 +1,103 @@
-/*MEMORY*/
-The memory struct simulates computer memory. It contains:
-	int totalMemory;	//The total allocated memory
-	int freeMemory;		//The current amount of free memory
-	block* firstBlock;	//The first block of memory
+PROJECT 2 README FILE
 
-/*BLOCK*/
+
+TABLE OF CONTENTS
+------------------------------------
+1. INTRODUCTION
+2. MEMORY AND BLOCKS
+3. SUPPORTED MEMORY ALGORITHMS
+4. SUPPORTED INPUT FILE COMMANDS
+5. INCLUDES AND THE REASONS FOR THEM
+------------------------------------
+
+
+*/-----1-----\*
+
+
+Hello! This is Project 2 of "Introduction to Operating Systems", Fall 2017. 
+This program is designed to simulate memory and allow the user to test the effects of a variety of memory algorithms (see Section 3) by use of a text file of commands (see Section 4).
+To get this program up and running, simply call "make" in your Linux terminal in the file directory this readme and the .c files are in.
+To launch a memory algorithm command file, call ALGONAME [#BYTES] [FILENAME] (see section 4)
+
+
+*/-----2-----\* MEMORY AND BLOCKS
+
+
+/* MEMORY */
+The memory struct simulates computer memory. It contains:
+	unsigned long totalMemory;	//The total number of bytes this memory structure represents
+	block* firstBlock;			//The first Block in memory (left-most, if it exists it always has relative position 0).
+Essentially memory keeps track of the total memory and the block at relative location 0.
+
+/* BLOCK */
 Blocks simulate blocks of memory and processes. 
 Blocks are either designated processes (memory allocated to processes) or non-processes (free memory).
 Blocks contain
-	bool isProcess;			//Whether the block is a process (non-free)
-	char* label;			//If the block is a process, this is the associated program name
-	int size;				//The number of bytes in the block
-	struct block* prevBlock;//A pointer to the previous block in memory. If there is none, this is a null pointer.
-	struct block* nextBlock;//A pointer to the next block in memory. If there is none, this is a null pointer.
+	bool isProcess;				//Whether the block is a process (non-free)
+	char* label;				//If the block is a process, this is the associated program name
+	unsigned long size;			//The number of bytes in the block
+	unsigned long location;		//The relative location of this block within the memory struct instance that contains it.
+	struct block* prevBlock;	//A pointer to the previous block in memory. If there is none, this is a null pointer.
+	struct block* nextBlock;	//A pointer to the next block in memory. If there is none, this is a null pointer.
 
-/*FIRSTFIT*/
+/* PROCESS SPAWNING */
+Behind the scenes, spawning a process into a block in this program breaks that block in twain, with the left cut being labelled a Process and the right cut being labelled free memory.
+If the process being spawned is the same size as the block, the block will simply be replaced by the process.
+
+
+*/-----3-----\* MEMORY ALGORITHMS
+
+
+/* GENERAL FORM: ALGONAME [#BYTES] [FILENAME] */
+Runs through the contents of FILENAME line-by-line, attempting to interpret each line as an individual command (unless that line starts with a '#' (in which case it's just a comment) or is not a valid memory algorithm command (not one of the ones listed below)).
+ALGONAME can be one of the 4 algorithms below, #BYTES should be between 2^4 and 2^20 (although the project description specified using unsigned longs for block sizes and memory addresses, so unsigned longs should work as well).
+FILENAME should be either the name of a file within the same directory as the executable created with the makefile, or an absolute path to the file.
+
+/* FIRSTFIT [#BYTES] [FILENAME] */
 FirstFit attempts to fit a process into memory as early as possible. To this effect, it runs through memory starting with memory->firstBlock and follows the chain of pointers to next blocks until there is a block with enough space for a process of the user-designated size.
 
-/*NEXTFIT*/
+/* NEXTFIT [#BYTES] [FILENAME] */
 NextFit keeps a sort of cursor, tracking where in memory the previous call to NextFit left off (by default this is the first address of memory). When called, it travels from that point sequentially through memory until it encounters a block with enough space.
+More specifically to this program, because the blocks of memory (blocks and processes) are in the form of a linked list, and we do not have reference to where exactly nextFit left off, this actually performs two loops of memory:
+the first time around incrementing the cursor positively until there are no blocks left, then the second time setting the cursor to position 0 and increasing it again until it hits the spot we started on with the call.
+The first time it finds a block with enough room during that time, it spawns a process within it. 
 
-/*BESTFIT*/
+/* BESTFIT [#BYTES] [FILENAME] */
 BestFit looks at all the blocks of memory and finds the first block with the smallest amount of memory such that the designated process can fit, then spawns that process in that block.
 
-/*LIST [AVAILABLE/UNAVAILABLE]*/
-Lists the available/unavailable blocks of memory (designated by whether they are processes).
 
-/*RELEASE*/
-Releases a block,setting isProcess to false and label to NULL.
+*/-----4-----\* INPUT FILE COMMANDS
+
+
+/* REQUEST [LABEL] [#BYTES] */
+Spawns a process with the given LABEL and of size #BYTES using the memory algorithm (see Section 3) with which the command input file was opened.
+LABEL can be any string of up to 16 characters, while #BYTES should be an unsigned long.
+Prints "ALLOCATED [LABEL] x", where x is the location of the process in Memory in relation to the first Block, if the REQUEST successfully spawns a process LABEL with #BYTES bytes.
+If REQUEST did not successfully allocate process LABEL with #BYTES bytes in memory, it instead prints FAIL REQUEST [LABEL] [#BYTES].
+After this method is called, usually a CleanMemory method is called internally that joins adjacent free blocks of memory.
+
+/*RELEASE [LABEL]*/
+Attempts to release a process in memory with the label [LABEL]. Specifically, it attempts to replace any Blocks positively identified as processes with identically-sized Blocks that are not processes.
+When successful, prints FREE [LABEL] n x, where n and x are the number of bytes of and the relative location, respectively, of the released block.
+When unsuccessful, prints FAIL RELEASE [LABEL]. 
+After this method is called, usually a CleanMemory method is called internally that joins adjacent free blocks of memory.
+
+/* LIST [AVAILABLE/ASSIGNED] */
+Lists the available/unavailable blocks of memory (designated by whether they are processes).
+Specifically, this cycles through the LinkedList of Blocks in Memory and if a given block b has b->isProcess as true, its information will only be displayed if AVAILABLE was chosen; if ASSIGNED is chosen the opposite is true.
+In the case of AVAILABLE, this is output in the form (n1, x1) (n2, x2) ... , where ni is the number of bytes in a given block and xi is the location of its start in Memory relative to the start of the first block of Memory.
+In the case of ASSIGNED, this is output in the form (A1, n1, x1) (A2, n2, x2) ... , where Ai is the process label, n1 is the number of bytes given to it, and xi is its location in Memory relative to the start of the first block of Memory.
 
 /*FIND [LABEL]*/
-Finds and returns a block with the given label, and prints info about it.
+Finds and returns a pointer to the block with the given label.
 
-/*INCLUDES*/
-I included
-stdbool.h, for defining booleans
-stdlib.h, for atoi, malloc, free, and NULL, 
-unistd.h, for getcwd and NULL
-string.h, for strlen, strcpy, and strcmp
-stdio.h, for input, output, and FILE.
+
+*/-----5-----\*
+
+
+/*Includes*/
+stdbool.h | for defining booleans
+stdlib.h  | for strtoul, malloc, free, and NULL, 
+unistd.h  | for getcwd and NULL
+string.h  | for strlen, strcpy, and strcmp
+stdio.h   | for input, output, and FILE.
