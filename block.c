@@ -6,6 +6,8 @@ typedef struct block
 	bool isProcess;
 	char* label;
 	int size;
+
+	int location;
 	struct block* prevBlock;
 	struct block* nextBlock;
 }block;
@@ -21,6 +23,8 @@ block createEmptyBlock(int size, block* prevBlock, block* nextBlock)
 		NULL,
 		//.size = size,
 		size,
+		//.location = prevBlock==NULL?0:(prevBlock->location+prevBlock->size);
+		prevBlock == NULL ? 0 : (prevBlock->location + prevBlock->size),
 		//.prevBlock = prevBlock,
 		prevBlock,
 		//.nextBlock = nextBlock
@@ -41,6 +45,8 @@ block createProcess(int size, char* label, block* prevBlock, block* nextBlock)
 		label,
 		//.size = size,
 		size,
+		//.location = prevBlock==NULL?0:(prevBlock->location+prevBlock->size);
+		prevBlock == NULL ? 0 : (prevBlock->location + prevBlock->size),
 		//.prevBlock = prevBlock,
 		prevBlock,
 		//.nextBlock = nextBlock
@@ -55,21 +61,6 @@ void releaseBlock(block* blockToRelease)
 	(*blockToRelease) = createEmptyBlock(blockToRelease->size, blockToRelease->prevBlock, blockToRelease->nextBlock);
 }
 
-void splitBlock(block* blockToSplit)
-{
-	block* sb2 = malloc(sizeof(block));
-	*sb2 = createEmptyBlock(blockToSplit->size / 2, blockToSplit, blockToSplit->nextBlock);
-	blockToSplit->size /= 2;
-	blockToSplit->nextBlock = sb2;
-}
-
-void splitBlockUntilPieceSize(block* blockToSplit, int size)
-{
-	while ((blockToSplit->size) / 2 >= size)
-	{
-		splitBlock(blockToSplit);
-	}
-}
 
 int getRelativeLocation(block* b)
 {
@@ -86,9 +77,9 @@ void printBlockContents(block b)
 {
 
 	if (b.isProcess)
-		printf("(%s, %i, %i)", b.label, b.size, getRelativeLocation(&b));
+		printf("(%s, %i, %i)", b.label, b.size, getRelativeLocation(&b) + b.location);
 	else
-		printf("(%i, %i)", b.size, getRelativeLocation(&b));
+		printf("(%i, %i)", b.size, getRelativeLocation(&b)+b.location);
 	
 }
 

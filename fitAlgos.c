@@ -90,7 +90,7 @@ bool nextFitProcess(memory* mem, int size, char* label, int* nextFitCounter)
 	//Check for indices greater than the original value of nextFitCounter	
 }
 
-
+/*
 bool buddyFit(memory* mem, int size, char* label)
 {
 	int curSmallestAccoBlock=-1;
@@ -116,3 +116,4 @@ bool buddyFit(memory* mem, int size, char* label)
 	return true;
 
 }
+*/

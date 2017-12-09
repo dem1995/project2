@@ -6,9 +6,7 @@
 
 typedef struct memory
 {
-	int totalMemory;
-	int freeMemory;
-	
+	int totalMemory;	
 	block* firstBlock;
 }memory;
 
@@ -19,8 +17,6 @@ memory createMemory(int size)
 	//This is some janky initialization syntax
 	memory newMemory = {
 		//.totalMemory = size,
-		size,
-		//.freeMemory = size,
 		size,
 		//.firstBlock = malloc(sizeof(block))
 		malloc(sizeof(block))
@@ -36,7 +32,7 @@ void cleanMemory(memory mem)
 	for (block* b = mem.firstBlock; b != NULL; b = b->nextBlock)
 	{
 		//If we're looking at a free block of memory, and not a process block, and the next block isn't null
-		if (!(b->isProcess)&&!(b->nextBlock==NULL))
+		if (!(b->isProcess)&&(b->nextBlock!=NULL))
 		{
 			if (!(b->nextBlock->isProcess))
 			{
@@ -45,6 +41,7 @@ void cleanMemory(memory mem)
 				block* nextBlock = b->nextBlock;
 				thisBlock->size += nextBlock->size;
 				thisBlock->nextBlock = nextBlock->nextBlock;
+				free(nextBlock);
 			}
 		}
 	}
