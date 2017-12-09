@@ -77,7 +77,7 @@ int main(int argc, char ** argv)
 														 //if the user's input actually has things
 			if (args[0])
 			{
-				//printf("%s_%s_%s\n", args[0], args[1], args[2]);
+				printf("%s %s %s\n", args[0], args[1], args[2]);
 
 				char* label = malloc(strlen(args[1]));
 				strcpy(label, args[1]);
