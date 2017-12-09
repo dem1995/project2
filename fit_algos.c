@@ -72,6 +72,8 @@ block* nextFitProcess(memory* mem, unsigned long size, char* label, unsigned lon
 		{
 			printBlockContents(*b);
 			printf("hi2\n");
+			printAllMemContents(*mem);
+			printf("hi3\n");
 			if (b->size >= size && !(b->isProcess))
 			{
 				block* spawnedProcess = spawnProcess(mem, b, label, size);
