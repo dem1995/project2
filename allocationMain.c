@@ -105,7 +105,7 @@ int main(int argc, char ** argv)
 					if (succeeded)
 						printf("ALLOCATED %s %i\n", label, nextFitCounter);
 					else
-						printf("FAIL REQUEST %s\n", label);
+						printf("FAIL REQUEST %s %i\n", label, size);
 
 				}
 				/*RELEASE*/
