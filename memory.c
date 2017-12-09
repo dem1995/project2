@@ -106,11 +106,12 @@ void spawnProcess(memory* mem, block* theBlock, char* label, int processSize)
 			block* prevBlockPointerCopy = theBlock->prevBlock;
 			theBlock->prevBlock = malloc(sizeof(block));
 			*(theBlock->prevBlock) = createProcess(processSize, label, prevBlockPointerCopy, theBlock);
+			*theBlock = createEmptyBlock(theBlock->size - processSize, theBlock->prevBlock, theBlock->nextBlock);
 
 			//set the nextBlock of the block 2 before this one to this one
 			prevBlockPointerCopy->nextBlock = (theBlock->prevBlock);
 
-			theBlock->size -= processSize;
+			//theBlock->size -= processSize;
 
 		}
 		
