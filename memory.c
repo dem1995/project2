@@ -8,13 +8,13 @@
 
 typedef struct memory
 {
-	int totalMemory;	
+	unsigned long totalMemory;	
 	block* firstBlock;
 }memory;
 
 void printAllMemContents(memory mem);
 
-memory createMemory(int size)
+memory createMemory(unsigned long size)
 {
 	//This is some janky initialization syntax
 	memory newMemory = {
@@ -67,7 +67,7 @@ void freeMemory(memory mem)
 	}
 }
 
-block* spawnProcess(memory* mem, block* theBlock, char* label, int processSize)
+block* spawnProcess(memory* mem, block* theBlock, char* label, unsigned long processSize)
 {
 	if (processSize > theBlock->size)
 	{

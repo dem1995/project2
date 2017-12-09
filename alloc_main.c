@@ -13,7 +13,7 @@
 #define KCYN  "\x1B[36m"	//Cyan text
 #define RESET "\x1B[0m"	//Reset text color
 
-int nextFitCounter = 0;
+unsigned long nextFitCounter = 0;
 
 int main(int argc, char ** argv)
 {
@@ -41,13 +41,13 @@ int main(int argc, char ** argv)
 
 	//Fit Algorithm Type, space to allocate in memory, filename to draw commands from
 	char* fitAlgoChoice = NULL;
-	int spaceToAllocate = 0;
+	unsigned long spaceToAllocate = 0;
 	char* fileName = NULL;
 	FILE* shellInFP = NULL;
 
 	//If we have enough arguments, get things going; otherwise, end the program
 	fitAlgoChoice = argv[1];
-	spaceToAllocate = atoi(argv[2]);
+	spaceToAllocate = strtoul(argv[2], NULL, 10);
 	fileName = argv[3];
 
 
@@ -61,11 +61,6 @@ int main(int argc, char ** argv)
 	{
 		printf("%s\n", cwd);
 		openFile(cwd, fileName, &shellInFP, "r");
-	}
-	if (shellInFP == NULL)
-	{
-		shellInFP = stdin;
-		fprintf(stdout, "There was a problem opening the batch file. Reverting to using standard input.");
 	}
 
 
@@ -93,7 +88,7 @@ int main(int argc, char ** argv)
 				/*REQUEST*/
 				if (strcmp(args[0], "REQUEST") == 0)
 				{
-					int size = atoi(args[2]);
+					unsigned long size = atoi(args[2]);
 					block* spawnedProcess = NULL;
 
 					if (strcmp(fitAlgoChoice, "FIRSTFIT") == 0)

@@ -3,7 +3,7 @@
 #ifndef FIT_ALGOS_C
 #define FIT_ALGOS_C
 
-block* firstFitProcess(memory* mem, int size, char* label)
+block* firstFitProcess(memory* mem, unsigned long size, char* label)
 {
 	for (block* b = mem->firstBlock; b != NULL; b = b->nextBlock)
 	{
@@ -17,9 +17,9 @@ block* firstFitProcess(memory* mem, int size, char* label)
 	return NULL;
 }
 
-block* bestFitProcess(memory* mem, int size, char* label)
+block* bestFitProcess(memory* mem, unsigned long size, char* label)
 {
-	int minAccomodatingBlockSize = -1;
+	unsigned long minAccomodatingBlockSize = 0;
 	block* bestFitBlock = NULL;
 
 	//Cycle through the blocks, finding the minimum accomodating block size
@@ -27,7 +27,7 @@ block* bestFitProcess(memory* mem, int size, char* label)
 	{
 		if (b->size >= size)
 			if(!(b->isProcess))
-				if (minAccomodatingBlockSize < 0 || b->size < minAccomodatingBlockSize)
+				if (minAccomodatingBlockSize == 0 || b->size < minAccomodatingBlockSize)
 				{
 					minAccomodatingBlockSize = b->size;
 					bestFitBlock = b;
@@ -35,7 +35,7 @@ block* bestFitProcess(memory* mem, int size, char* label)
 	}
 
 	//If there were no sufficiently-large blocks
-	if (minAccomodatingBlockSize < 0)
+	if (minAccomodatingBlockSize == 0)
 		return NULL;
 	else
 	{
@@ -45,7 +45,7 @@ block* bestFitProcess(memory* mem, int size, char* label)
 	}
 }
 
-block* nextFitProcess(memory* mem, int size, char* label, int* nextFitCounter)
+block* nextFitProcess(memory* mem, unsigned long size, char* label, unsigned long* nextFitCounter)
 {
 	//Check part of memory to the right of the original cursor location.
 	for (block* b = mem->firstBlock; b != NULL; b = b->nextBlock)

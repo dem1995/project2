@@ -6,17 +6,16 @@
 
 typedef struct block
 {
-	bool isProcess;
-	char* label;
-	int size;
-	;
-	int location;
+	bool isProcess;	//whether the block is given to a process or not
+	char* label;	//if the block is a process, the process name
+	unsigned long size;		//the number of bytes the block has
+	unsigned long location;
 	struct block* prevBlock;
 	struct block* nextBlock;
 }block;
 
 
-block createEmptyBlock(int size, block* prevBlock, block* nextBlock)
+block createEmptyBlock(unsigned long size, block* prevBlock, block* nextBlock)
 {
 	block newBlock =
 	{
@@ -37,7 +36,7 @@ block createEmptyBlock(int size, block* prevBlock, block* nextBlock)
 	return newBlock;
 }
 
-block createProcess(int size, char* label, block* prevBlock, block* nextBlock)
+block createProcess(unsigned long size, char* label, block* prevBlock, block* nextBlock)
 {
 	//Might get some string pointer errors here
 	block newProcess = 

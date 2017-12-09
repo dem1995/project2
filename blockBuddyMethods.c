@@ -1,4 +1,3 @@
-
 #include "block.c"
 
 void splitBlock(block* blockToSplit)
@@ -9,7 +8,7 @@ void splitBlock(block* blockToSplit)
 	blockToSplit->nextBlock = sb2;
 }
 
-void splitBlockUntilPieceSize(block* blockToSplit, int size)
+void splitBlockUntilPieceSize(block* blockToSplit, unsigned long size)
 {
 	while ((blockToSplit->size) / 2 >= size)
 	{
