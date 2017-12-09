@@ -90,15 +90,6 @@ void printBlockContents(block b)
 	else
 		printf("(%i, %i)", b.size, getRelativeLocation(&b));
 	
-	/*
-	printf("Block of size %i. ", b.size);
-	if (b.isProcess)
-		printf("Block is process of name %s", b.label);
-	else
-		printf("Block is not a process.");
-	printf("\n");
-	*/
-
 }
 
 

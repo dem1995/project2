@@ -11,8 +11,7 @@
 #define KCYN  "\x1B[36m"	//Cyan text
 #define RESET "\x1B[0m"	//Reset text color
 
-
-int nextFitCounter;
+int nextFitCounter = 0;
 
 int main(int argc, char ** argv)
 {
