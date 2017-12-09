@@ -86,14 +86,19 @@ int main(int argc, char ** argv)
 				if (strcmp(args[0], "REQUEST") == 0)
 				{
 					int size = atoi(args[2]);
+					bool succeeded = true;
 					if (strcmp(fitAlgoChoice, "FIRSTFIT") == 0)
-						firstFitProcess(&mem, size, label);
+						succeeded = firstFitProcess(&mem, size, label);
 					else if (strcmp(fitAlgoChoice, "BESTFIT") == 0)
-						bestFitProcess(&mem, size, label);
+						succeeded = bestFitProcess(&mem, size, label);
 					else if (strcmp(fitAlgoChoice, "NEXTFIT") == 0)
-						nextFitProcess(&mem, size, label, &nextFitCounter);
+						succeeded = nextFitProcess(&mem, size, label, &nextFitCounter);
 					else if (strcmp(fitAlgoChoice, "BUDDY") == 0)
 						printf("Buddy");
+					if (!succeeded)
+					{
+						printf("Fail Request %s\n", label);
+					}
 				}
 				/*RELEASE*/
 				else if (strcmp(args[0], "RELEASE") == 0)
