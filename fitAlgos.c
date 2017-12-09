@@ -99,7 +99,7 @@ bool nextFitProcess(memory* mem, int size, char* label, int* nextFitCounter)
 				spawnProcess(mem, b, label, size);
 				cleanMemory(*mem);
 				*nextFitCounter = currentMemIndex;
-				printf("curMemIndex: %i, b->location: %i\n", currentMemIndex, b->location);
+				//printf("curMemIndex: %i, b->location: %i\n", currentMemIndex, b->location);
 				return true;
 			}
 		}
@@ -118,7 +118,7 @@ bool nextFitProcess(memory* mem, int size, char* label, int* nextFitCounter)
 				spawnProcess(mem, b, label, size);
 				cleanMemory(*mem);
 				*nextFitCounter = currentMemIndex;
-				printf("curMemIndex: %i, b->location: %i\n", currentMemIndex, b->location);
+				//printf("curMemIndex: %i, b->location: %i\n", currentMemIndex, b->location);
 				return true;
 			}
 		}
