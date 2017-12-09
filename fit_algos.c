@@ -1,5 +1,7 @@
 #include "memory.c"
 
+#ifndef FIT_ALGOS_C
+#define FIT_ALGOS_C
 
 block* firstFitProcess(memory* mem, int size, char* label)
 {
@@ -43,51 +45,8 @@ block* bestFitProcess(memory* mem, int size, char* label)
 	}
 }
 
-
-//
-//bool nextFitProcess(memory* mem, int size, char* label, int* nextFitCounter)
-//{
-//
-//	//Check part of memory to the right of the original cursor location.
-//	for (block* b = mem->firstBlock; b != NULL; b = b->nextBlock)
-//	{
-//		if (b->location > *nextFitCounter)
-//		{
-//			if (b->size >= size && !(b->isProcess))
-//			{
-//				spawnProcess(mem, b, label, size);
-//				cleanMemory(*mem);
-//				*nextFitCounter = b->location;
-//				return true;
-//			}
-//		}
-//	}
-//
-//	//Check part of memory to the left of the original cursor location.
-//	for (block* b = mem->firstBlock; b != NULL; b = b->nextBlock)
-//	{
-//		if (b->location <= *nextFitCounter)
-//		{
-//			if (b->size >= size && !(b->isProcess))
-//			{
-//				spawnProcess(mem, b, label, size);
-//				cleanMemory(*mem);
-//				*nextFitCounter = b->location;
-//				return true;
-//			}
-//		}
-//		//If we've passed the original cursor location, then there's no room in memory for this process.
-//		else
-//			break;
-//	}
-//
-//	return false;
-//	//Check for indices greater than the original value of nextFitCounter	
-//}
 block* nextFitProcess(memory* mem, int size, char* label, int* nextFitCounter)
 {
-
-
 	//Check part of memory to the right of the original cursor location.
 	for (block* b = mem->firstBlock; b != NULL; b = b->nextBlock)
 	{
@@ -104,7 +63,6 @@ block* nextFitProcess(memory* mem, int size, char* label, int* nextFitCounter)
 		}
 	}
 
-
 	//Check part of memory to the left of the original cursor location.
 	for (block* b = mem->firstBlock; b != NULL; b = b->nextBlock)
 	{
@@ -118,10 +76,10 @@ block* nextFitProcess(memory* mem, int size, char* label, int* nextFitCounter)
 				//printf("curMemIndex: %i, b->location: %i\n", currentMemIndex, b->location);
 				return spawnedProcess;
 			}
+			//If we've passed the original cursor location, then there's no room in memory for this process.
+			else
+				break;
 		}
-		//If we've passed the original cursor location, then there's no room in memory for this process.
-		else
-			break;
 	}
 
 	return NULL;
@@ -155,3 +113,4 @@ bool buddyFit(memory* mem, int size, char* label)
 
 }
 */
+#endif FIT_ALGOS_C

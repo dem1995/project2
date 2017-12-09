@@ -3,6 +3,8 @@
 #include <string.h>
 #include "block.c"
 
+#ifndef MEMORY_C
+#define MEMORY_C
 
 typedef struct memory
 {
@@ -182,8 +184,4 @@ void printEmptyBlockMemContents(memory mem)
 	printf("\n");
 }
 
-
-
-
-
-
+#endif MEMORY_C

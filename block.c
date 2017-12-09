@@ -1,6 +1,9 @@
 #include <stdbool.h>
 #include <stdio.h>
 
+#ifndef BLOCK_C
+#define BLOCK_C
+
 typedef struct block
 {
 	bool isProcess;
@@ -72,4 +75,4 @@ void printBlockContents(block b)
 	
 }
 
-
+#endif BLOCK_C

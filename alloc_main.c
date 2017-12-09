@@ -1,8 +1,10 @@
-#include "fileIOMethods.c"
-#include "fitAlgos.c"
+#include "file_io.c"
+#include "fit_algos.c"
 #include <stdlib.h>
 #include <unistd.h>
 
+#ifndef ALLOC_MAIN_C
+#define ALLOC_MAIN_C
 
 #define MAX_BUFFER 1024 // max line buffer
 #define MAX_ARGS 64 // max # args
@@ -146,3 +148,4 @@ int main(int argc, char ** argv)
 		fclose(shellInFP);
 }
 
+#endif ALLOC_MAIN_C
