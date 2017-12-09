@@ -64,7 +64,7 @@ block createProcess(unsigned long size, char* label, block* prevBlock, block* ne
 void releaseBlock(block* blockToRelease)
 {
 	if (blockToRelease->label!=NULL)
-		free(blockToRelease->label);
+		free(blockToRelease->label));
 	(*blockToRelease) = createEmptyBlock(blockToRelease->size, blockToRelease->prevBlock, blockToRelease->nextBlock);
 }
 

@@ -84,16 +84,16 @@ block* nextFitProcess(memory* mem, unsigned long size, char* label, unsigned lon
 	//Check for indices greater than the original value of nextFitCounter	
 }
 
-/*
-bool buddyFit(memory* mem, int size, char* label)
+
+block* buddyFitProcess(memory* mem, unsigned long size, char* label)
 {
-	int curSmallestAccoBlock=-1;
+	unsigned long curSmallestAccoBlock=0;
 	block* blockToBreak = NULL;
 	for (block* b = mem->firstBlock; b != NULL; b = b->nextBlock)
 	{
 		if (b->size > size && !(b->isProcess))
 		{
-			if (b->size < curSmallestAccoBlock || curSmallestAccoBlock < 0)
+			if (b->size < curSmallestAccoBlock || curSmallestAccoBlock == 0)
 			{
 				curSmallestAccoBlock = b->size;
 				blockToBreak = b;
@@ -106,9 +106,10 @@ bool buddyFit(memory* mem, int size, char* label)
 		splitBlockUntilPieceSize(blockToBreak, size);
 
 	}
-	//TODO delete this line
-	return true;
 
+	block* spawnedProcess = spawnProcess(blockToBreak, size);
+
+	return spawnedProcess;
 }
-*/
+
 #endif //FIT_ALGOS_C
