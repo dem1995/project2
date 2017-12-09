@@ -86,7 +86,7 @@ int main(int argc, char ** argv)
 				{
 
 					firstFitProcess(&mem, atoi(args[2]), label);
-					printAllMemContents(mem);
+					//printAllMemContents(mem);
 				}
 				else if (strcmp(args[0], "RELEASE") == 0)
 				{
