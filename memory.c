@@ -155,13 +155,11 @@ void printProcessMemContents(memory mem)
 	{
 		if (b->isProcess)
 		{
+			if (areProcesses)
+				printf(" ");
 			areProcesses = true;
 			printBlockContents(*b);
-			if (b->nextBlock != NULL)
-			{
-				if (b->nextBlock->isProcess)
-					printf(" ");
-			}
+
 		}
 	}
 
@@ -178,13 +176,10 @@ void printEmptyBlockMemContents(memory mem)
 	{
 		if (!(b->isProcess))
 		{
+			if (areEmptyBlocks)
+				printf(" ");
 			areEmptyBlocks = true;
 			printBlockContents(*b);
-			if (b->nextBlock != NULL)
-			{
-				if(!(b->nextBlock->isProcess))
-					printf(" ");
-			}
 		}
 	}
 
