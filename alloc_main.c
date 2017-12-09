@@ -100,9 +100,9 @@ int main(int argc, char ** argv)
 					else if (strcmp(fitAlgoChoice, "BUDDY") == 0)
 						printf("Buddy");
 					if (spawnedProcess!=NULL)
-						printf("ALLOCATED %s %i\n", label, spawnedProcess->location);
+						printf("ALLOCATED %s %lu\n", label, spawnedProcess->location);
 					else
-						printf("FAIL REQUEST %s %i\n", label, size);
+						printf("FAIL REQUEST %s %lu\n", label, size);
 
 				}
 				/*RELEASE*/
@@ -113,7 +113,7 @@ int main(int argc, char ** argv)
 						printf("FAIL RELEASE %s\n", label);
 					else
 					{
-						printf("FREE %s %i %i\n", label, b->size, b->location);
+						printf("FREE %s %lu %lu\n", label, b->size, b->location);
 						releaseBlock(b);
 						cleanMemory(mem);
 					}
@@ -133,7 +133,7 @@ int main(int argc, char ** argv)
 					if (b == NULL)
 						printf("Process %s not found\n", label);
 					else
-						printf("(%s, %i, %i)\n", label, b->size, b->location);
+						printf("(%s, %lu, %lu)\n", label, b->size, b->location);
 				}
 			}
 		}

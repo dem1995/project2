@@ -68,9 +68,9 @@ void printBlockContents(block b)
 {
 
 	if (b.isProcess)
-		printf("(%s, %i, %i)", b.label, b.size, b.location);
+		printf("(%s, %lu, %lu)", b.label, b.size, b.location);
 	else
-		printf("(%i, %i)", b.size, b.location);
+		printf("(%lu, %lu)", b.size, b.location);
 	
 }
 

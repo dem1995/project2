@@ -55,9 +55,11 @@ block* nextFitProcess(memory* mem, unsigned long size, char* label, unsigned lon
 			if (b->size >= size && !(b->isProcess))
 			{
 				block* spawnedProcess = spawnProcess(mem, b, label, size);
+				printBlockContents(*spawnedProcess);
+				printf("hi\n");
 				cleanMemory(*mem);
 				*nextFitCounter = b->location;
-				//printf("curMemIndex: %i, b->location: %i\n", currentMemIndex, b->location);
+				//printf("curMemIndex: %lu, b->location: %lu\n", currentMemIndex, b->location);
 				return spawnedProcess;
 			}
 		}
@@ -73,7 +75,7 @@ block* nextFitProcess(memory* mem, unsigned long size, char* label, unsigned lon
 				block* spawnedProcess = spawnProcess(mem, b, label, size);
 				cleanMemory(*mem);
 				*nextFitCounter = b->location;
-				//printf("curMemIndex: %i, b->location: %i\n", currentMemIndex, b->location);
+				//printf("curMemIndex: %lu, b->location: %lu\n", currentMemIndex, b->location);
 				return spawnedProcess;
 			}
 			//If we've passed the original cursor location, then there's no room in memory for this process.
