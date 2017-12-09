@@ -89,7 +89,7 @@ int main(int argc, char ** argv)
 				if (strcmp(args[0], "REQUEST") == 0)
 				{
 
-					unsigned long size = atol(arg[2]);
+					unsigned long size = strtoul(args[2], NULL, 10);
 					block* spawnedProcess = NULL;
 
 					if (strcmp(fitAlgoChoice, "FIRSTFIT") == 0)
