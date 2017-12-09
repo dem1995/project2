@@ -102,7 +102,7 @@ int main(int argc, char ** argv)
 					else if (strcmp(fitAlgoChoice, "NEXTFIT") == 0)
 						spawnedProcess = nextFitProcess(&mem, size, label, &nextFitCounter);
 					else if (strcmp(fitAlgoChoice, "BUDDY") == 0)
-						printf("Buddy");
+						spawnedProcess = firstFitProcess(&mem, size, label);
 					if (spawnedProcess!=NULL)
 						printf("ALLOCATED %s %lu\n", label, spawnedProcess->location);
 					else
