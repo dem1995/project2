@@ -84,6 +84,7 @@ int main(int argc, char ** argv)
 
 				if (strcmp(args[0], "REQUEST")==0)
 				{
+
 					firstFitProcess(&mem, atoi(args[2]), label);
 					printAllMemContents(mem);
 				}
@@ -107,70 +108,6 @@ int main(int argc, char ** argv)
 	}
 
 }
-void main2()
-{
-	printf("Creating memory of size 20\n");
-	memory mem = createMemory(20);
-	printf("\n");
-
-	printf("FirstFit adding size 13 fred\n");
-	firstFitProcess(&mem, 13, "fred");
-	printAllMemContents(mem);
-	printf("\n");
-
-	printf("NextFit adding size 6 geore\n");
-	nextFitProcess(&mem, 6, "george", &nextFitCounter);
-	printAllMemContents(mem);
-	printf("\n");
-
-	printf("Releasing fred\n");
-	releaseProcess(&mem, "fred");
-	cleanMemory(mem);
-	printAllMemContents(mem);
-	printf("\n");
-
-	printf("NextFit adding harold\n");
-	nextFitProcess(&mem, 1, "harold", &nextFitCounter);
-	printAllMemContents(mem);
-	printf("\n");
-
-	printf("End");
-	freeMemory(mem);
-	return 0;
-}
-
-void main3()
-{
-	printf("Creating memory of size 20\n");
-	memory mem = createMemory(20);
-	printf("\n");
-
-	printf("FirstFit adding size 13 fred\n");
-	firstFitProcess(&mem, 13, "fred");	
-	printAllMemContents(mem);
-	printf("\n");
-
-	printf("FirstFit adding size 6 geore\n");
-	firstFitProcess(&mem, 6, "george");
-	printAllMemContents(mem);
-	printf("\n");
-	
-	printf("Releasing fred\n");
-	releaseProcess(&mem, "fred");
-	cleanMemory(mem);
-	printAllMemContents(mem);
-	printf("\n");
-
-	printf("BestFit adding harold\n");
-	bestFitProcess(&mem, 1, "harold");
-	printAllMemContents(mem);
-	printf("\n");
-
-	printf("End");
-	freeMemory(mem);
-	return 0;
-}
-
 
 bool firstFitProcess(memory* mem, int size, char* label)
 {
@@ -254,4 +191,10 @@ bool nextFitProcess(memory* mem, int size, char* label, int* nextFitCounter)
 
 	return false;
 	//Check for indices greater than the original value of nextFitCounter	
+}
+
+
+bool buddyFit(memory* mem, int size, char* label)
+{
+	splitBlock(mem->firstBlock);
 }

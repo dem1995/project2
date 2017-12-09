@@ -55,6 +55,14 @@ void releaseBlock(block* blockToRelease)
 	(*blockToRelease) = createEmptyBlock(blockToRelease->size, blockToRelease->prevBlock, blockToRelease->nextBlock);
 }
 
+void splitBlock(block* blockToSplit)
+{
+	block* sb2 = malloc(sizeof(block));
+	*sb2 = createEmptyBlock(blockToSplit->size / 2, blockToSplit, blockToSplit->nextBlock);
+	blockToSplit->size /= 2;
+	blockToSplit->nextBlock = sb2;
+}
+
 int getRelativeLocation(block* b)
 {
 	int i = 0;
