@@ -61,6 +61,7 @@ int main(int argc, char ** argv)
 	else
 		openFile(cwd, fileName, &shellInFP, "r");
 
+	bool isBuddyFit = strcmp(fitAlgoChoice, "BUDDYFIT") == 0;
 
 	/* Now for input readin.*/
 	while (!feof(shellInFP)) 
@@ -101,7 +102,7 @@ int main(int argc, char ** argv)
 						spawnedProcess = bestFitProcess(&mem, size, label);
 					else if (strcmp(fitAlgoChoice, "NEXTFIT") == 0)
 						spawnedProcess = nextFitProcess(&mem, size, label, &nextFitCounter);
-					else if (strcmp(fitAlgoChoice, "BUDDY") == 0)
+					else if (strcmp(fitAlgoChoice, "BUDDYFIT") == 0)
 						spawnedProcess = buddyFitProcess(&mem, size, label);
 					printAllMemContents(mem);
 					if (spawnedProcess!=NULL)
@@ -120,7 +121,10 @@ int main(int argc, char ** argv)
 					{
 						printf("FREE %s %lu %lu\n", label, b->size, b->location);
 						releaseBlock(b);
-						cleanMemory(mem);
+						if (isBuddyFit)
+							;
+						else
+							cleanMemory(mem);
 					}
 				}
 				/*LIST*/
