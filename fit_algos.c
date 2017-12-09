@@ -52,11 +52,11 @@ block* nextFitProcess(memory* mem, unsigned long size, char* label, unsigned lon
 	{
 		if (b->location > *nextFitCounter)
 		{
+			printBlockContents(*b);
+			printf("hi\n");
 			if (b->size >= size && !(b->isProcess))
 			{
 				block* spawnedProcess = spawnProcess(mem, b, label, size);
-				printBlockContents(*spawnedProcess);
-				printf("hi\n");
 				cleanMemory(*mem);
 				*nextFitCounter = b->location;
 				//printf("curMemIndex: %lu, b->location: %lu\n", currentMemIndex, b->location);
