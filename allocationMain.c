@@ -182,6 +182,7 @@ bool firstFitProcess(memory* mem, int size, char* label)
 			return true;
 		}
 	}
+	cleanMemory(*mem);
 	return false;
 }
 
