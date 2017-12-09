@@ -1,4 +1,5 @@
 #include "memory.c"
+#include "blockBuddyMethods.c"
 
 #ifndef FIT_ALGOS_C
 #define FIT_ALGOS_C
