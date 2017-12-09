@@ -63,6 +63,14 @@ void splitBlock(block* blockToSplit)
 	blockToSplit->nextBlock = sb2;
 }
 
+void splitBlockUntilPieceSize(block* blockToSplit, int size)
+{
+	while ((blockToSplit->size) / 2 >= size)
+	{
+		splitBlock(blockToSplit);
+	}
+}
+
 int getRelativeLocation(block* b)
 {
 	int i = 0;

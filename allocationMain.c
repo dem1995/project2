@@ -1,8 +1,7 @@
-#include "memory.c"
 #include "fileIOMethods.c"
+#include "fitAlgos.c"
 #include <stdlib.h>
 #include <unistd.h>
-
 
 
 #define MAX_BUFFER 1024 // max line buffer
@@ -12,51 +11,53 @@
 #define KCYN  "\x1B[36m"	//Cyan text
 #define RESET "\x1B[0m"	//Reset text color
 
-bool firstFitProcess(memory* mem, int size, char* label);
-bool bestFitProcess(memory* mem, int size, char* label);
-bool nextFitProcess(memory* mem, int size, char* label, int* nextFitCounter);
 
 int nextFitCounter;
-FILE* shellInFP = NULL;
 
-
-
-int main(int argc, char ** argv) 
+int main(int argc, char ** argv)
 {
 	char buf[MAX_BUFFER];		// line buffer
 	char* args[MAX_ARGS];		// pointers to arg strings
 	char** arg;					// working pointer thru args
 	char* prompt = "==>";		// prompt
 	char cwd[1024];
+	getcwd(cwd, sizeof(cwd));
 
-
-
-	int spaceToAllocate = 0;
-	if (argc > 1)
-		spaceToAllocate = atoi(argv[2]);
-	if (argc > 2)
-	{	
-		getcwd(cwd, sizeof(cwd));		
+	if (argc < 4)
+	{
+		printf("Not enough arguments");
+		return -1;
 	}
+
+	//Fit Algorithm Type, space to allocate in memory, filename to draw commands from
+	char* fitAlgoChoice = NULL;
+	int spaceToAllocate = 0;
+	char* fileName = NULL;
+	FILE* shellInFP = NULL;
+
+	//If we have enough arguments, get things going; otherwise, end the program
+	fitAlgoChoice = argv[1];
+	spaceToAllocate = atoi(argv[2]);
+	fileName = argv[3];
+
 
 	memory mem = createMemory(spaceToAllocate);
 
 
-	if (argv[2] != NULL)
+	//Open a file pointer to the file to read from
+	if (fileName[0] == '/')
+		shellInFP = fopen(fileName, "r");
+	else
 	{
-		if (argv[1][0] == '/')
-			shellInFP = fopen(argv[3], "r");
-		else
-		{
-			printf("%s\n", cwd);
-			openFile(cwd, argv[3], &shellInFP, "r");
-		}
-		if (shellInFP == NULL)
-		{
-			shellInFP = stdin;
-			fprintf(stdout, "There was a problem opening the batch file. Reverting to using standard input.");
-		}
+		printf("%s\n", cwd);
+		openFile(cwd, fileName, &shellInFP, "r");
 	}
+	if (shellInFP == NULL)
+	{
+		shellInFP = stdin;
+		fprintf(stdout, "There was a problem opening the batch file. Reverting to using standard input.");
+	}
+
 
 	/* Now for input readin. Keep reading input until "quit" command or eof of redirected input */
 	while (!feof(shellInFP)) {
@@ -82,7 +83,7 @@ int main(int argc, char ** argv)
 				char* label = malloc(strlen(args[1]));
 				strcpy(label, args[1]);
 
-				if (strcmp(args[0], "REQUEST")==0)
+				if (strcmp(args[0], "REQUEST") == 0)
 				{
 
 					firstFitProcess(&mem, atoi(args[2]), label);
@@ -107,94 +108,7 @@ int main(int argc, char ** argv)
 		}
 	}
 
+	if (shellInFP != NULL)
+		fclose(shellInFP);
 }
 
-bool firstFitProcess(memory* mem, int size, char* label)
-{
-	for (block* b = mem->firstBlock; b != NULL; b = b->nextBlock)
-	{
-		if (b->size >= size && !(b->isProcess))
-		{
-			spawnProcess(mem, b, label, size);
-			return true;
-		}
-	}
-	cleanMemory(*mem);
-	return false;
-}
-
-bool bestFitProcess(memory* mem, int size, char* label)
-{
-	int minAccomodatingBlockSize = -1;
-	block* bestFitBlock = NULL;
-
-	//Cycle through the blocks, finding the minimum accomodating block size
-	for (block* b = mem->firstBlock; b != NULL; b = b->nextBlock)
-	{
-		if (b->size >= size)
-			if(!(b->isProcess))
-				if (minAccomodatingBlockSize < 0 || b->size < minAccomodatingBlockSize)
-				{
-					minAccomodatingBlockSize = b->size;
-					bestFitBlock = b;
-				}		
-	}
-
-	//If there were no sufficiently-large blocks
-	if (minAccomodatingBlockSize < 0)
-		return false;
-	else
-	{
-		spawnProcess(mem, bestFitBlock, label, size);
-		return true;
-	}
-}
-
-bool nextFitProcess(memory* mem, int size, char* label, int* nextFitCounter)
-{
-	int origCounter = *nextFitCounter;
-
-	int locCounter=0;
-	//Check for indices greater than nextFitCounter
-	for (block* b = mem->firstBlock; b != NULL; b = b->nextBlock)
-	{
-		if (locCounter > *nextFitCounter)
-		{
-			*nextFitCounter = locCounter;
-
-			if (b->size >= size)
-			{
-				spawnProcess(mem, b, label, size);
-				return true;
-			}
-		}
-
-		locCounter += b->size;
-	}
-
-	locCounter = 0;
-	for (block* b = mem->firstBlock; b != NULL && *nextFitCounter <= origCounter; locCounter+=b->size, b = b->nextBlock)
-	{
-		if (locCounter > *nextFitCounter)
-		{
-			*nextFitCounter = locCounter;
-
-			if (b->size >= size)
-			{
-				spawnProcess(mem, b, label, size);
-				return true;
-			}
-		}
-
-		locCounter += b->size;
-	}
-
-	return false;
-	//Check for indices greater than the original value of nextFitCounter	
-}
-
-
-bool buddyFit(memory* mem, int size, char* label)
-{
-	splitBlock(mem->firstBlock);
-}
