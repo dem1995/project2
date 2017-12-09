@@ -22,10 +22,19 @@ int main(int argc, char ** argv)
 	char cwd[1024];
 	getcwd(cwd, sizeof(cwd));
 
+	bool showCommands = false;
+
 	if (argc < 4)
 	{
 		printf("Not enough arguments\n");
 		return -1;
+	}
+	if (argc >= 5)
+	{
+		if (strcmp(argv[4], "-showYourMoves") == 0)
+		{
+			showCommands = true;
+		}
 	}
 
 	//Fit Algorithm Type, space to allocate in memory, filename to draw commands from
@@ -58,26 +67,23 @@ int main(int argc, char ** argv)
 	}
 
 
-	/* Now for input readin. Keep reading input until "quit" command or eof of redirected input */
-	while (!feof(shellInFP)) {
+	/* Now for input readin.*/
+	while (!feof(shellInFP)) 
+	{
+		/*Interpret input (executing commands, etc.)*/
 
-		//Prints the current directory to stdout
-		if (shellInFP == stdin)
-			fprintf(stdout, KCYN"%s"RESET"%s ", getenv("PWD"), prompt); //write prompt
-
-																			/*Interpret input (executing commands, etc.)*/
 		if (fgets(buf, MAX_BUFFER, shellInFP)) //read a line
 		{
-
 			/*TOKENIZING THE INPUT*/
 			arg = args;
 			*arg++ = strtok(buf, SEPARATORS);
 			while ((*arg++ = strtok(NULL, SEPARATORS))); // last entry will be NULL	
 
-														 //if the user's input actually has things
+			//if the input actually has things
 			if (args[0])
 			{
-				printf("%s %s %s\n", args[0], args[1], args[2]);
+				if (showCommands)
+					printf("%s %s %s\n", args[0], args[1], args[2]);
 
 				char* label = malloc(strlen(args[1]));
 				strcpy(label, args[1]);
@@ -100,8 +106,6 @@ int main(int argc, char ** argv)
 						printf("ALLOCATED %s %i\n", label, nextFitCounter);
 					else
 						printf("FAIL REQUEST %s\n", label);
-					
-
 
 				}
 				/*RELEASE*/
