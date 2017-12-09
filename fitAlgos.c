@@ -43,41 +43,88 @@ bool bestFitProcess(memory* mem, int size, char* label)
 	}
 }
 
+
+//
+//bool nextFitProcess(memory* mem, int size, char* label, int* nextFitCounter)
+//{
+//
+//	//Check part of memory to the right of the original cursor location.
+//	for (block* b = mem->firstBlock; b != NULL; b = b->nextBlock)
+//	{
+//		if (b->location > *nextFitCounter)
+//		{
+//			if (b->size >= size && !(b->isProcess))
+//			{
+//				spawnProcess(mem, b, label, size);
+//				cleanMemory(*mem);
+//				*nextFitCounter = b->location;
+//				return true;
+//			}
+//		}
+//	}
+//
+//	//Check part of memory to the left of the original cursor location.
+//	for (block* b = mem->firstBlock; b != NULL; b = b->nextBlock)
+//	{
+//		if (b->location <= *nextFitCounter)
+//		{
+//			if (b->size >= size && !(b->isProcess))
+//			{
+//				spawnProcess(mem, b, label, size);
+//				cleanMemory(*mem);
+//				*nextFitCounter = b->location;
+//				return true;
+//			}
+//		}
+//		//If we've passed the original cursor location, then there's no room in memory for this process.
+//		else
+//			break;
+//	}
+//
+//	return false;
+//	//Check for indices greater than the original value of nextFitCounter	
+//}
 bool nextFitProcess(memory* mem, int size, char* label, int* nextFitCounter)
 {
 
+	int currentMemIndex = 0;
 
 	//Check part of memory to the right of the original cursor location.
 	for (block* b = mem->firstBlock; b != NULL; b = b->nextBlock)
 	{
-		if (b->location > *nextFitCounter)
+		if (currentMemIndex > *nextFitCounter)
 		{
 			if (b->size >= size && !(b->isProcess))
 			{
 				spawnProcess(mem, b, label, size);
 				cleanMemory(*mem);
-				*nextFitCounter = b->location;
+				*nextFitCounter = currentMemIndex;
 				return true;
 			}
 		}
+		//Increment (to track) the current index of memory
+		currentMemIndex += b->size;
 	}
 
+	currentMemIndex = 0;
 	//Check part of memory to the left of the original cursor location.
 	for (block* b = mem->firstBlock; b != NULL; b = b->nextBlock)
 	{
-		if (b->location <= *nextFitCounter)
+		if (currentMemIndex <= *nextFitCounter)
 		{
 			if (b->size >= size && !(b->isProcess))
 			{
 				spawnProcess(mem, b, label, size);
 				cleanMemory(*mem);
-				*nextFitCounter = b->location;
+				*nextFitCounter = currentMemIndex;
 				return true;
 			}
 		}
 		//If we've passed the original cursor location, then there's no room in memory for this process.
 		else
 			break;
+
+		currentMemIndex += b->size;
 	}
 
 	return false;
