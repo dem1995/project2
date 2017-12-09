@@ -125,6 +125,7 @@ void releaseProcess(memory* mem, char* label)
 				printAllMemContents(*mem);
 			}
 	}
+	cleanMemory(*mem);
 }
 
 void printAllMemContents(memory mem)
