@@ -82,6 +82,7 @@ int main(int argc, char ** argv)
 				char* label = malloc(strlen(args[1]));
 				strcpy(label, args[1]);
 
+				/*REQUEST*/
 				if (strcmp(args[0], "REQUEST") == 0)
 				{
 					int size = atoi(args[2]);
@@ -94,6 +95,7 @@ int main(int argc, char ** argv)
 					else if (strcmp(fitAlgoChoice, "BUDDY") == 0)
 						printf("Buddy");
 				}
+				/*RELEASE*/
 				else if (strcmp(args[0], "RELEASE") == 0)
 				{
 					block* b = findBlock(&mem, label);
@@ -101,11 +103,12 @@ int main(int argc, char ** argv)
 						printf("FAIL RELEASE %s\n", label);
 					else
 					{
-						printf("FREE %s %i %i\n", label, b->size, getRelativeLocation(b));
+						printf("FREE %s %i %i\n", label, b->size, b->location);
 						releaseBlock(b);
 						cleanMemory(mem);
 					}
 				}
+				/*LIST*/
 				else if (strcmp(args[0], "LIST") == 0)
 				{
 					if (strcmp(args[1], "AVAILABLE") == 0)
@@ -113,13 +116,14 @@ int main(int argc, char ** argv)
 					else if (strcmp(args[1], "ASSIGNED") == 0)
 						printProcessMemContents(mem);
 				}
+				/*FIND*/
 				else if (strcmp(args[0], "FIND") == 0)
 				{
 					block* b = findBlock(&mem, label);
 					if (b == NULL)
 						printf("Process %s not found\n", label);
 					else
-						printf("(%s %i %i)\n", label, b->size, getRelativeLocation(b));
+						printf("(%s %i %i)\n", label, b->size, b->location);
 				}
 			}
 		}

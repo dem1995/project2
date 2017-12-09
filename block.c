@@ -62,24 +62,13 @@ void releaseBlock(block* blockToRelease)
 }
 
 
-int getRelativeLocation(block* b)
-{
-	int i = 0;
-	for (block* c = b->prevBlock; c != NULL; c = c->prevBlock)
-	{
-		i += (c->size);
-	}
-
-	return i;
-}
-
 void printBlockContents(block b)
 {
 
 	if (b.isProcess)
-		printf("(%s, %i, %i)", b.label, b.size, getRelativeLocation(&b) + b.location);
+		printf("(%s, %i, %i)", b.label, b.size, b.location);
 	else
-		printf("(%i, %i)", b.size, getRelativeLocation(&b)+b.location);
+		printf("(%i, %i)", b.size, b.location);
 	
 }
 
