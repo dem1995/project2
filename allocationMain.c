@@ -25,7 +25,7 @@ int main(int argc, char ** argv)
 
 	if (argc < 4)
 	{
-		printf("Not enough arguments");
+		printf("Not enough arguments\n");
 		return -1;
 	}
 
@@ -85,9 +85,15 @@ int main(int argc, char ** argv)
 
 				if (strcmp(args[0], "REQUEST") == 0)
 				{
-
-					firstFitProcess(&mem, atoi(args[2]), label);
-					//printAllMemContents(mem);
+					int size = atoi(args[2]);
+					if (strcmp(fitAlgoChoice, "FIRSTFIT") == 0)
+						firstFitProcess(&mem, size, label);
+					else if (strcmp(fitAlgoChoice, "BESTFIT") == 0)
+						bestFitProcess(&mem, size, label);
+					else if (strcmp(fitAlgoChoice, "NEXTFIT") == 0)
+						nextFitProcess(&mem, size, label, &nextFitCounter);
+					else if (strcmp(fitAlgoChoice, "BUDDY") == 0)
+						printf("Buddy");
 				}
 				else if (strcmp(args[0], "RELEASE") == 0)
 				{
