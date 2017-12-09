@@ -142,6 +142,8 @@ int main(int argc, char ** argv)
 
 	if (shellInFP != NULL)
 		fclose(shellInFP);
+
+	freeMemory(mem);
 }
 
 #endif //ALLOC_MAIN_C
