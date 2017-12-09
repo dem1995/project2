@@ -86,7 +86,8 @@ int main(int argc, char ** argv)
 				if (strcmp(args[0], "REQUEST") == 0)
 				{
 					int size = atoi(args[2]);
-					bool succeeded = true;
+					bool succeeded = false;
+
 					if (strcmp(fitAlgoChoice, "FIRSTFIT") == 0)
 						succeeded = firstFitProcess(&mem, size, label);
 					else if (strcmp(fitAlgoChoice, "BESTFIT") == 0)
@@ -95,10 +96,13 @@ int main(int argc, char ** argv)
 						succeeded = nextFitProcess(&mem, size, label, &nextFitCounter);
 					else if (strcmp(fitAlgoChoice, "BUDDY") == 0)
 						printf("Buddy");
-					if (!succeeded)
-					{
-						printf("Fail Request %s\n", label);
-					}
+					if (succeeded)
+						printf("ALLOCATED %s %i\n", label, nextFitCounter);
+					else
+						printf("FAIL REQUEST %s\n", label);
+					
+
+
 				}
 				/*RELEASE*/
 				else if (strcmp(args[0], "RELEASE") == 0)
