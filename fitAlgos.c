@@ -7,9 +7,9 @@ block* firstFitProcess(memory* mem, int size, char* label)
 	{
 		if (b->size >= size && !(b->isProcess))
 		{
-			spawnProcess(mem, b, label, size);
+			block* spawnedProcess = spawnProcess(mem, b, label, size);
 			cleanMemory(*mem);
-			return b;
+			return spawnedProcess;
 		}
 	}
 	return NULL;
@@ -37,9 +37,9 @@ block* bestFitProcess(memory* mem, int size, char* label)
 		return NULL;
 	else
 	{
-		spawnProcess(mem, bestFitBlock, label, size);
+		block* spawnedProcess = spawnProcess(mem, bestFitBlock, label, size);
 		cleanMemory(*mem);
-		return bestFitBlock;
+		return spawnedProcess;
 	}
 }
 
@@ -96,11 +96,11 @@ block* nextFitProcess(memory* mem, int size, char* label, int* nextFitCounter)
 		{
 			if (b->size >= size && !(b->isProcess))
 			{
-				spawnProcess(mem, b, label, size);
+				block* spawnedProcess = spawnProcess(mem, b, label, size);
 				cleanMemory(*mem);
 				*nextFitCounter = currentMemIndex;
 				//printf("curMemIndex: %i, b->location: %i\n", currentMemIndex, b->location);
-				return b;
+				return spawnedProcess;
 			}
 		}
 		//Increment (to track) the current index of memory
@@ -115,11 +115,11 @@ block* nextFitProcess(memory* mem, int size, char* label, int* nextFitCounter)
 		{
 			if (b->size >= size && !(b->isProcess))
 			{
-				spawnProcess(mem, b, label, size);
+				block* spawnedProcess = spawnProcess(mem, b, label, size);
 				cleanMemory(*mem);
 				*nextFitCounter = currentMemIndex;
 				//printf("curMemIndex: %i, b->location: %i\n", currentMemIndex, b->location);
-				return b;
+				return spawnedProcess;
 			}
 		}
 		//If we've passed the original cursor location, then there's no room in memory for this process.

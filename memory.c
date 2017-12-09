@@ -65,10 +65,13 @@ void freeMemory(memory mem)
 	}
 }
 
-void spawnProcess(memory* mem, block* theBlock, char* label, int processSize)
+block* spawnProcess(memory* mem, block* theBlock, char* label, int processSize)
 {
 	if (processSize > theBlock->size)
+	{
 		printf("Process %s size too big", label);
+		return NULL;
+	}
 	else if (processSize == theBlock->size)
 	{
 
@@ -77,6 +80,7 @@ void spawnProcess(memory* mem, block* theBlock, char* label, int processSize)
 		*(theBlock) = createProcess(processSize, label, theBlock->prevBlock, theBlock->nextBlock);
 		//printf("after %s replacement: ", label);
 		//printAllMemContents(*mem);
+		return theBlock;
 		
 	}
 	else
@@ -88,6 +92,7 @@ void spawnProcess(memory* mem, block* theBlock, char* label, int processSize)
 			*(theBlock->prevBlock) = createProcess(processSize, label, NULL, theBlock);
 			*theBlock = createEmptyBlock(theBlock->size - processSize, theBlock->prevBlock, theBlock->nextBlock);
 			mem->firstBlock = theBlock->prevBlock;
+			return theBlock->prevBlock;
 		}
 		else
 		{
@@ -110,8 +115,7 @@ void spawnProcess(memory* mem, block* theBlock, char* label, int processSize)
 
 			//set the nextBlock of the block 2 before this one to this one
 			prevBlockPointerCopy->nextBlock = (theBlock->prevBlock);
-
-			//theBlock->size -= processSize;
+			return theBlock->prevBlock;
 
 		}
 		
