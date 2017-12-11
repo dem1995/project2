@@ -149,7 +149,7 @@ int main(int argc, char ** argv)
 						printf("FREE %s %lu %lu\n", label, b->size, b->location);
 						releaseBlock(b);
 						if (isBuddyFit)
-							;
+							buddyCleanMemory(mem);
 						else
 							cleanMemory(mem);
 					}
