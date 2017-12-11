@@ -110,7 +110,7 @@ block* buddyFitProcess(memory* mem, unsigned long size, char* label)
 	for (block* b = mem->firstBlock; b != NULL; b = b->nextBlock)
 	{
 		//If the block is large enough, is not a process, and is not a dummy block
-		if (b->size > size && !(b->isProcess) && ! (b->dummyBlock))
+		if (b->size >= size && !(b->isProcess) && ! (b->dummyBlock))
 		{
 			//and either this is smaller than the previously-found block size, or the previously found minimum block size is 0
 			if (b->size < curSmallestAccoBlock || curSmallestAccoBlock == 0)
