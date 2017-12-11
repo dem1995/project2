@@ -109,7 +109,7 @@ block* buddyFitProcess(memory* mem, unsigned long size, char* label)
 		//printBlockContents(*blockToBreak);
 	}
 
-	printAllMemContents(*mem);
+	//printAllMemContents(*mem);
 
 	if (blockToBreak!=NULL)
 	{
