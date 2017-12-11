@@ -48,6 +48,34 @@ void cleanMemory(memory mem)
 	}
 }
 
+void buddyCleanMemory(memory mem)
+{
+	for (block* b = mem.firstBlock; b != NULL; b = b->nextBlock)
+	{
+		//If we're looking at a free block of memory, and not a process block, and the next block isn't null
+		if (!(b->isProcess) && (b->nextBlock != NULL))
+		{
+			if (!(b->nextBlock->isProcess))
+			{
+				//if the block is a left block
+				if (b->location / b->size % 2 == 0)
+				{
+					//If the blocks are buddies
+					if (b->size == b->nextBlock->size)
+					{
+						//Combine the blocks
+						block* thisBlock = b;
+						block* nextBlock = b->nextBlock;
+						thisBlock->size += nextBlock->size;
+						thisBlock->nextBlock = nextBlock->nextBlock;
+						free(nextBlock);
+					}			
+				}		
+			}
+		}
+	}
+}
+
 void freeMemory(memory mem)
 {
 	for (block* b = mem.firstBlock; b != NULL;)

@@ -22,7 +22,9 @@ int main()
 	splitBlockUntilPieceSize(mem2.firstBlock, 2);
 	printf("Contents: \n");
 	printAllMemContents(mem2);
-
+	printf("after clean:\n");
+	buddyCleanMemory(mem2);
+	printAllMemContents(mem2);
 	freeMemory(mem2);
 
 	printf("cutting 64 to 7 \n");
