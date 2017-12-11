@@ -1,9 +1,11 @@
 #include <stdbool.h>
 #include <stdio.h>
 
+//General structs and methods for representing and manipulating blocks
 #ifndef BLOCK_C
 #define BLOCK_C
 
+//Struct for representing a block or process in memory (as well as indicating adjacent blocks/processes)
 typedef struct block
 {
 	bool isProcess;				//Whether the block is a process (non-free)
@@ -12,7 +14,7 @@ typedef struct block
 	unsigned long location;		//The relative location of this block within the memory struct instance that contains it.
 	struct block* prevBlock;	//A pointer to the previous block in memory. If there is none, this is a null pointer.
 	struct block* nextBlock;	//A pointer to the next block in memory. If there is none, this is a null pointer.
-	bool dummyBlock;			//Only makes sense in context of buddy system
+	bool dummyBlock;			//Keeps track of whether this empty block is actually reserved by a process in the Buddy system by virtue of internal fragmentation.
 }block;
 
 
@@ -75,6 +77,7 @@ block* mergeBlocks(block* thisBlock, block* nextBlock)
 	return thisBlock;
 }
 
+
 /*Converts a process block to a non-process block, simulating releasing memory*/
 void releaseBlock(block* blockToRelease)
 {
@@ -83,7 +86,7 @@ void releaseBlock(block* blockToRelease)
 	(*blockToRelease) = createEmptyBlock(blockToRelease->size, blockToRelease->prevBlock, blockToRelease->nextBlock);
 }
 
-
+//Prints the contents of the block in the form (label, size, location) if it is a process; (size, location), otherwise
 void printBlockContents(block b)
 {
 

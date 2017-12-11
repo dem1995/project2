@@ -3,6 +3,7 @@
 #include <string.h>
 #include "block.c"
 
+//General structs and methods for representing and manipulating memory. 
 #ifndef MEMORY_C
 #define MEMORY_C
 
@@ -14,6 +15,7 @@ typedef struct memory
 
 void printAllMemContents(memory mem);
 
+//Creates memory with "size bytes". Blocks are kept track of as part of a linked list.
 memory createMemory(unsigned long size)
 {
 	memory newMemory = {
@@ -23,31 +25,33 @@ memory createMemory(unsigned long size)
 		malloc(sizeof(block))
 	};
 
+	//spawn an empty block in memory representing all it can hold.
 	*(newMemory.firstBlock) = createEmptyBlock(size, NULL, NULL);
-
 	return newMemory;
 }
 
+//Cleans the memory by merging adjacent empty blocks.
 void cleanMemory(memory mem)
 {
+	//keeps track of whether blocks got merged in the last run-through
 	bool runWithoutChange = false;
+	//If it is not true that no blocks were merged in the last run-through
 	while (!runWithoutChange)
 	{
+		//Assume it will be true this time. This will be changed to false if a change actually occurs.
 		runWithoutChange = true;
+		//Cycle through the blocks
 		for (block* b = mem.firstBlock; b != NULL; b = b->nextBlock)
 		{
 			//If we're looking at a free block of memory, and not a process block, and the next block isn't null
 			if (!(b->isProcess) && (b->nextBlock != NULL))
 			{
+				//If the block after this one is not a process
 				if (!(b->nextBlock->isProcess))
 				{
 					runWithoutChange = false;
 					//Combine the blocks
-					block* thisBlock = b;
-					block* nextBlock = b->nextBlock;
-					thisBlock->size += nextBlock->size;
-					thisBlock->nextBlock = nextBlock->nextBlock;
-					free(nextBlock);
+					mergeBlocks(b, b->nextBlock);
 				}
 			}
 		}
@@ -55,16 +59,19 @@ void cleanMemory(memory mem)
 }
 
 
-
+//Free all the memory (malloced blocks and malloced block labels)
 void freeMemory(memory mem)
 {
+	//cycle through the blocks
 	for (block* b = mem.firstBlock; b != NULL;)
 	{
 
 		block* nextBlockPtrCopy = b->nextBlock;
 		
+		//if the block exists
 		if (b != NULL)
 		{
+			//if its label exists
 			if (b->label != NULL)
 				free(b->label);
 			free(b);
@@ -74,23 +81,18 @@ void freeMemory(memory mem)
 	}
 }
 
+//Spawns a process in a block of memory, breaking the block in twain (into a process block and a non-process block)
 block* spawnProcess(memory* mem, block* theBlock, char* label, unsigned long processSize)
 {
+	//if the process size is small enough
 	if (processSize > theBlock->size)
 	{
-		printf("Process %s size too big", label);
 		return NULL;
 	}
 	else if (processSize == theBlock->size)
 	{
-
-		//printf("before %s replacement: ", label);
-		//printAllMemContents(*mem);
 		*(theBlock) = createProcess(processSize, label, theBlock->prevBlock, theBlock->nextBlock);
-		//printf("after %s replacement: ", label);
-		//printAllMemContents(*mem);
-		return theBlock;
-		
+		return theBlock;	
 	}
 	else
 	{
@@ -122,6 +124,7 @@ block* spawnProcess(memory* mem, block* theBlock, char* label, unsigned long pro
 	}
 }
 
+//Finds a block in memory with the given label and returns a pointer to it. Retruns NULL if no such block can be found
 block* findBlock(memory* mem, char* label)
 {
 	for (block* b = mem->firstBlock; b != NULL; b = b->nextBlock)
@@ -136,6 +139,7 @@ block* findBlock(memory* mem, char* label)
 	return NULL;
 }
 
+//Prints all the blocks in memory
 void printAllMemContents(memory mem)
 {
 	bool spaceBool = false;
@@ -153,6 +157,7 @@ void printAllMemContents(memory mem)
 	printf("\n");
 }
 
+//Prints all the processes in memory
 void printProcessMemContents(memory mem)
 {
 	bool areProcesses = false;
@@ -174,6 +179,7 @@ void printProcessMemContents(memory mem)
 	printf("\n");
 }
 
+//Prints all the non-process blocks in memory.
 void printEmptyBlockMemContents(memory mem)
 {
 	bool areEmptyBlocks = false;

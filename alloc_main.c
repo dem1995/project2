@@ -10,33 +10,6 @@
 #define MAX_ARGS 64 // max # args
 #define SEPARATORS " \t\n" // token sparators
 
-//int main()
-//{
-//	memory mem = createMemory(128);
-//	splitBlock(mem.firstBlock);
-//	printf("Contents: \n");
-//	printAllMemContents(mem);
-//	freeMemory(mem);
-//	printf("cutting 256 to 2 \n");
-//	memory mem2 = createMemory(256);
-//	splitBlockUntilPieceSize(mem2.firstBlock, 2);
-//	printf("Contents: \n");
-//	printAllMemContents(mem2);
-//	printf("after clean:\n");
-//	buddyCleanMemory(mem2);
-//	printAllMemContents(mem2);
-//	freeMemory(mem2);
-//
-//	printf("cutting 64 to 7 \n");
-//	memory mem3 = createMemory(64);
-//	splitBlockUntilPieceSize(mem3.firstBlock, 7);
-//	printf("Contents: \n");
-//	printAllMemContents(mem3);
-//
-//	freeMemory(mem3);
-//}
-
-//
 int main(int argc, char ** argv)
 {
 	char buf[MAX_BUFFER];		// line buffer
@@ -44,7 +17,7 @@ int main(int argc, char ** argv)
 	char** arg;					// working pointer thru args
 	char* prompt = "==>";		// prompt
 	char cwd[1024];
-	getcwd(cwd, sizeof(cwd));
+	getcwd(cwd, sizeof(cwd));	//Grabs the current working directory (relevant for specifying the input file)
 
 	bool showCommands = false;			//Whether to show lines from the command input file
 	unsigned long nextFitCounter = 0;	//An unsigned long tracker for use with NextFit
@@ -96,7 +69,7 @@ int main(int argc, char ** argv)
 		//read a line
 		if (fgets(buf, MAX_BUFFER, shellInFP)) 
 		{
-			/*TOKENIZING THE INPUT*/
+			/* TOKENIZING THE INPUT */
 			arg = args;
 			*arg++ = strtok(buf, SEPARATORS);
 			// last entry will be NULL	
@@ -113,7 +86,8 @@ int main(int argc, char ** argv)
 				
 				//Allocate space for the process name
 				char* label = args[1];
-				
+
+				/* COMMAND SECTION */
 
 				/*REQUEST*/
 				if (strcmp(args[0], "REQUEST") == 0)
@@ -129,9 +103,7 @@ int main(int argc, char ** argv)
 					else if (strcmp(fitAlgoChoice, "NEXTFIT") == 0)
 						spawnedProcess = nextFitProcess(&mem, size, label, &nextFitCounter);
 					else if (strcmp(fitAlgoChoice, "BUDDYFIT") == 0)
-					{
 						spawnedProcess = buddyFitProcess(&mem, size, label);
-					}
 					if (spawnedProcess!=NULL)
 						printf("ALLOCATED %s %lu\n", label, spawnedProcess->location);
 					else
@@ -148,17 +120,21 @@ int main(int argc, char ** argv)
 					{
 						printf("FREE %s %lu %lu\n", label, b->size, b->location);
 						releaseBlock(b);
+
+						//BuddyFit algorithm has special cleaning rules
 						if (isBuddyFit)
 							buddyCleanMemory(mem);
 						else
 							cleanMemory(mem);
 					}
 				}
+
 				/*LIST*/
 				else if (strcmp(args[0], "LIST") == 0)
 				{
 					if (strcmp(args[1], "AVAILABLE") == 0)
 					{
+						//BuddyFit algorithm has special printing rules
 						if (isBuddyFit)
 							printBuddyEmptyBlockMemContents(mem);
 						else
@@ -167,17 +143,14 @@ int main(int argc, char ** argv)
 					else if (strcmp(args[1], "ASSIGNED") == 0)
 						printProcessMemContents(mem);
 				}
+
 				/*FIND*/
 				else if (strcmp(args[0], "FIND") == 0)
 				{
 					block* b = findBlock(&mem, label);
-					if (b == NULL)
-						printf("Process %s not found\n", label);
-					else
+					if (b != NULL)
 						printf("(%s, %lu, %lu)\n", label, b->size, b->location);
 				}
-				//printf("MEMORY: ");
-				//printAllMemContents(mem);
 			}
 		}
 	}

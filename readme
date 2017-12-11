@@ -11,8 +11,7 @@ TABLE OF CONTENTS
 ------------------------------------
 
 
-*/-----1-----\*
-
+*/-----1-----\* INTRODUCTION
 
 Hello! This is Project 2 of "Introduction to Operating Systems", Fall 2017. 
 This program is designed to simulate memory and allow the user to test the effects of a variety of memory algorithms (see Section 3) by use of a text file of commands (see Section 4).
@@ -21,7 +20,6 @@ To launch a memory algorithm command file, call ALGONAME [#BYTES] [FILENAME] (se
 
 
 */-----2-----\* MEMORY AND BLOCKS
-
 
 /* MEMORY */
 The memory struct simulates computer memory. It contains:
@@ -39,6 +37,7 @@ Blocks contain
 	unsigned long location;		//The relative location of this block within the memory struct instance that contains it.
 	struct block* prevBlock;	//A pointer to the previous block in memory. If there is none, this is a null pointer.
 	struct block* nextBlock;	//A pointer to the next block in memory. If there is none, this is a null pointer.
+	bool dummyBlock;			//Keeps track of whether this empty block is actually reserved by a process in the Buddy system by virtue of internal fragmentation.
 
 /* PROCESS SPAWNING */
 Behind the scenes, spawning a process into a block in this program breaks that block in twain, with the left cut being labelled a Process and the right cut being labelled free memory.
@@ -46,7 +45,6 @@ If the process being spawned is the same size as the block, the block will simpl
 
 
 */-----3-----\* MEMORY ALGORITHMS
-
 
 /* GENERAL FORM: ALGONAME [#BYTES] [FILENAME] */
 Runs through the contents of FILENAME line-by-line, attempting to interpret each line as an individual command (unless that line starts with a '#' (in which case it's just a comment) or is not a valid memory algorithm command (not one of the ones listed below)).
@@ -65,9 +63,13 @@ The first time it finds a block with enough room during that time, it spawns a p
 /* BESTFIT [#BYTES] [FILENAME] */
 BestFit looks at all the blocks of memory and finds the first block with the smallest amount of memory such that the designated process can fit, then spawns that process in that block.
 
+/* BUDDY [#BYTES] [FILENAME] */
+Buddy takes a process and finds the first smallest block of memory large enough to accomodate that process, then splits that block into two equal pieces if in doing so the resulting blocks are still large enough to hold the process.
+Buddy repeats this process until it can't split blocks any further without being unable to accomodate the process in any of those blocks.
+Unlike the other processes, Buddy does not merge empty blocks unless they are "buddies" (blocks feasibly created (by repeatedly performing the splitting part of the "buddy" algorithm) at the same time as each other).
+
 
 */-----4-----\* INPUT FILE COMMANDS
-
 
 /* REQUEST [LABEL] [#BYTES] */
 Spawns a process with the given LABEL and of size #BYTES using the memory algorithm (see Section 3) with which the command input file was opened.
@@ -89,11 +91,11 @@ In the case of AVAILABLE, this is output in the form (n1, x1) (n2, x2) ... , whe
 In the case of ASSIGNED, this is output in the form (A1, n1, x1) (A2, n2, x2) ... , where Ai is the process label, n1 is the number of bytes given to it, and xi is its location in Memory relative to the start of the first block of Memory.
 
 /*FIND [LABEL]*/
-Finds and returns a pointer to the block with the given label.
+Locates a process with the given [LABEL]. 
+If successful, prints ([LABEL], n, x), where n is size of the process labelled [LABEL] in bytes and x is the relative starting address of said process.
 
 
 */-----5-----\*
-
 
 /*Includes*/
 stdbool.h | for defining booleans
