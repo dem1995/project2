@@ -21,6 +21,7 @@ void splitBlockUntilPieceSize(block* blockToSplit, unsigned long size)
 {
 	while ((blockToSplit->size) / 2 >= size)
 	{
+		printf("The block size is %lu vs %lu\n", blockToSplit->size, size);
 		splitBlock(blockToSplit);
 	}
 }
@@ -30,7 +31,6 @@ block* buddySpawnProcess(memory* mem, block* theBlock, char* label, unsigned lon
 {
 	if (processSize > theBlock->size)
 	{
-
 		return NULL;
 	}
 	else if (processSize == theBlock->size)
