@@ -162,6 +162,7 @@ bool printBuddyBlockContents(block b)
 void printBuddyEmptyBlockMemContents(memory mem)
 {
 	bool areEmptyBlocks = false;
+	bool hasRun = false;
 	for (block* b = mem.firstBlock; b != NULL; b = b->nextBlock)
 	{
 		if (!(b->isProcess))
@@ -169,10 +170,12 @@ void printBuddyEmptyBlockMemContents(memory mem)
 			if (areEmptyBlocks)
 				printf(" ");
 			areEmptyBlocks = printBuddyBlockContents(*b);
+			if (areEmptyBlocks)
+				hasRun = true;
 		}
 	}
 
-	if (!areEmptyBlocks)
+	if (!hasRun)
 		printf("FULL");
 
 	printf("\n");
