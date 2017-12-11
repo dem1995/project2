@@ -129,7 +129,10 @@ int main(int argc, char ** argv)
 					else if (strcmp(fitAlgoChoice, "NEXTFIT") == 0)
 						spawnedProcess = nextFitProcess(&mem, size, label, &nextFitCounter);
 					else if (strcmp(fitAlgoChoice, "BUDDYFIT") == 0)
+					{
+						printf("buddy fit: \n");
 						spawnedProcess = buddyFitProcess(&mem, size, label);
+					}
 					printf("MEMORY: \n");
 					printAllMemContents(mem);
 					if (spawnedProcess!=NULL)
