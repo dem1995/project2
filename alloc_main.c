@@ -27,7 +27,7 @@ int main(int argc, char ** argv)
 	if (argc < 4)
 	{
 		printf("Not enough arguments\n");
-		return -1;
+		return 0;
 	}
 
 	//Debug option. Displays lines from the command input file.
@@ -169,6 +169,8 @@ int main(int argc, char ** argv)
 
 	//Free the contents of memory
 	freeMemory(mem);
+
+	return 0;
 }
 
 #endif //ALLOC_MAIN_C

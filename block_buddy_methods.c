@@ -21,11 +21,7 @@ void splitBlockUntilPieceSize(block* blockToSplit, unsigned long size, memory me
 {
 	while ((blockToSplit->size) / 2 >= size)
 	{
-		printf("mem1: \n");
-		printAllMemContents(mem);
 		splitBlock(blockToSplit);
-		printf("mem2: \n");
-		printAllMemContents(mem);
 	}
 }
 
