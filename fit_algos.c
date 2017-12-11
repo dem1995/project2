@@ -106,7 +106,7 @@ block* buddyFitProcess(memory* mem, unsigned long size, char* label)
 	if (blockToBreak!=NULL)
 	{
 		splitBlockUntilPieceSize(blockToBreak, size);
-		block* spawnedProcess = buddySpawnProcess(mem, blockToBreak, label, size);
+		spawnedProcess = buddySpawnProcess(mem, blockToBreak, label, size);
 	}
 
 	buddyCleanMemory(*mem);
