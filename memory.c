@@ -73,7 +73,9 @@ void buddyCleanMemory(memory mem)
 							block* nextBlock = b->nextBlock;
 							thisBlock->size += nextBlock->size;
 							thisBlock->nextBlock = nextBlock->nextBlock;
+							printf("test1\n");
 							free(nextBlock);
+							printf("test2\n");
 						}
 					}
 				}
