@@ -87,7 +87,7 @@ int main(int argc, char ** argv)
 	else
 		openFile(cwd, fileName, &shellInFP, "r");
 
-	bool isBuddyFit = strcmp(fitAlgoChoice, "BUDDYFIT") == 0;
+	bool isBuddyFit = (strcmp(fitAlgoChoice, "BUDDYFIT") == 0);
 
 	/* Now for input readin.*/
 	while (!feof(shellInFP)) 
