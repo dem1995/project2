@@ -138,11 +138,15 @@ block* findBlock(memory* mem, char* label)
 
 void printAllMemContents(memory mem)
 {
+	bool spaceBool = false;
 	for (block* b = mem.firstBlock; b != NULL; b = b->nextBlock)
 	{
+		if (spaceBool)
+			printf(" ");
+		spaceBool = true;
 		printBlockContents(*b);
-		printf("\n");
 	}
+	printf("\n");
 }
 
 void printProcessMemContents(memory mem)

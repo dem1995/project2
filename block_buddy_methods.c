@@ -103,7 +103,6 @@ void buddyCleanMemory(memory mem)
 					//if the block is a left block
 					if (b->location / b->size % 2 == 0)
 					{
-						printf("test0\n");
 						//If the blocks are buddies
 						if (b->size == b->nextBlock->size)
 						{
