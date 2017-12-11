@@ -67,13 +67,11 @@ block createProcess(unsigned long size, char* label, block* prevBlock, block* ne
 
 block* mergeBlocks(block* thisBlock, block* nextBlock)
 {
-	printf("begin merge");
 	thisBlock->size += nextBlock->size;
 	thisBlock->nextBlock = nextBlock->nextBlock;
 	free(nextBlock);
 	if (thisBlock->nextBlock != NULL)
 		thisBlock->nextBlock->prevBlock = thisBlock;
-	printf("end merge");
 	return thisBlock;
 }
 
