@@ -13,6 +13,6 @@ void splitBlockUntilPieceSize(block* blockToSplit, unsigned long size)
 	while ((blockToSplit->size) / 2 >= size)
 	{
 		splitBlock(blockToSplit);
-		printBlockContents(*blockToSplit);
+		//printBlockContents(*blockToSplit);
 	}
 }
