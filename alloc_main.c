@@ -14,11 +14,13 @@ int main()
 {
 	memory mem = createMemory(128);
 	splitBlock(mem.firstBlock);
+	printf("Contents: \n");
 	printAllMemContents(mem);
 	freeMemory(mem);
 	printf("cutting 256 to 2 \n");
 	memory mem2 = createMemory(256);
 	splitBlockUntilPieceSize(mem.firstBlock, 2);
+	printf("Contents: \n");
 	printAllMemContents(mem2);
 
 	freeMemory(mem2);
@@ -26,6 +28,7 @@ int main()
 	printf("cutting 64 to 7 \n");
 	memory mem3 = createMemory(64);
 	splitBlockUntilPieceSize(mem.firstBlock, 7);
+	printf("Contents: \n");
 	printAllMemContents(mem3);
 
 	freeMemory(mem3);
