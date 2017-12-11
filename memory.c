@@ -33,6 +33,7 @@ void cleanMemory(memory mem)
 	bool runWithoutChange = false;
 	while (!runWithoutChange)
 	{
+		runWithoutChange = true;
 		for (block* b = mem.firstBlock; b != NULL; b = b->nextBlock)
 		{
 			//If we're looking at a free block of memory, and not a process block, and the next block isn't null
@@ -40,6 +41,7 @@ void cleanMemory(memory mem)
 			{
 				if (!(b->nextBlock->isProcess))
 				{
+					runWithoutChange = false;
 					//Combine the blocks
 					block* thisBlock = b;
 					block* nextBlock = b->nextBlock;
