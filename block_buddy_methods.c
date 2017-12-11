@@ -118,9 +118,58 @@ void buddyCleanMemory(memory mem)
 	}
 }
 
-bool isPowerOfTwo(unsigned int x)
+
+
+void printBuddyBlockContents(block b)
 {
-	while (((x & 1) == 0) && x > 1)
-		x >>= 1;
-	return (x == 1);
+	if (b.isProcess)
+		printf("(%s, %lu, %lu)", b.label, b.size, b.location);
+	else
+	{
+		bool isAfterOtherEmptyBlock = false;
+		for (block* b2 = (b.prevBlock==NULL? NULL: b.prevBlock); b2 != NULL; b2 = b2->prevBlock)
+		{
+			if (b2->dummyBlock || !(b2->isProcess))
+			{
+				isAfterOtherEmptyBlock = true;
+				break;
+			}
+
+			if (b2->isProcess)
+				break;
+		}
+		if (!isAfterOtherEmptyBlock)
+		{
+			unsigned long size = 0;
+			unsigned long location = b.location;
+			for (block* b2 = &b; b2 != NULL; b2 = b2->nextBlock)
+			{
+				if (b2->isProcess)
+					break;
+				else
+					size += b2->size;
+			}
+			printf("(%lu, %lu)", size, location);
+		}
+	}
+}
+
+void printBuddyEmptyBlockMemContents(memory mem)
+{
+	bool areEmptyBlocks = false;
+	for (block* b = mem.firstBlock; b != NULL; b = b->nextBlock)
+	{
+		if (!(b->isProcess))
+		{
+			if (areEmptyBlocks)
+				printf(" ");
+			areEmptyBlocks = true;
+			printBuddyBlockContents(*b);
+		}
+	}
+
+	if (!areEmptyBlocks)
+		printf("FULL");
+
+	printf("\n");
 }

@@ -158,7 +158,12 @@ int main(int argc, char ** argv)
 				else if (strcmp(args[0], "LIST") == 0)
 				{
 					if (strcmp(args[1], "AVAILABLE") == 0)
-						printEmptyBlockMemContents(mem);
+					{
+						if (isBuddyFit)
+							printBuddyEmptyBlockMemContents(mem);
+						else
+							printEmptyBlockMemContents(mem);
+					}
 					else if (strcmp(args[1], "ASSIGNED") == 0)
 						printProcessMemContents(mem);
 				}
