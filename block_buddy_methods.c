@@ -1,0 +1,125 @@
+#include "block.c"
+#include "memory.c"
+
+void splitBlock(block* blockToSplit)
+{
+	printf("Splitting block: \n");
+	printBlockContents(*blockToSplit);
+	block* sb2 = malloc(sizeof(block));
+	block* blockAfterSplit = blockToSplit->nextBlock;
+	*blockToSplit = createEmptyBlock(blockToSplit->size / 2, blockToSplit->prevBlock, sb2);
+	*sb2 = createEmptyBlock(blockToSplit->size, blockToSplit, blockAfterSplit);
+	printf("Results: \n");
+	printBlockContents(*sb2);
+	printBlockContents(*blockToSplit);
+	printf("\n");
+}
+
+void splitBlockUntilPieceSize(block* blockToSplit, unsigned long size)
+{
+	while ((blockToSplit->size) / 2 >= size)
+	{
+		splitBlock(blockToSplit);
+		//printBlockContents(*blockToSplit);
+	}
+}
+
+block* buddySpawnProcess(memory* mem, block* theBlock, char* label, unsigned long processSize)
+{
+	if (processSize > theBlock->size)
+	{
+		printf("Process %s size too big", label);
+		return NULL;
+	}
+	else if (processSize == theBlock->size)
+	{
+
+		//printf("before %s replacement: ", label);
+		//printAllMemContents(*mem);
+		*(theBlock) = createProcess(processSize, label, theBlock->prevBlock, theBlock->nextBlock);
+		//printf("after %s replacement: ", label);
+		//printAllMemContents(*mem);
+		return theBlock;
+
+	}
+	else
+	{
+		if (theBlock->prevBlock == NULL)
+		{
+			// say we have block t. a->t->z becomes a->newblock->t->z
+			theBlock->prevBlock = malloc(sizeof(block));
+			*(theBlock->prevBlock) = createProcess(processSize, label, NULL, theBlock);
+			*theBlock = createEmptyBlock(theBlock->size - processSize, theBlock->prevBlock, theBlock->nextBlock);
+			mem->firstBlock = theBlock->prevBlock;
+			theBlock->dummyBlock = true;
+			return theBlock->prevBlock;
+		}
+		else
+		{
+
+			// say we have block t. a->t->z becomes a->newblock->t->z
+			block* prevBlockPointerCopy = theBlock->prevBlock;
+			theBlock->prevBlock = malloc(sizeof(block));
+			*(theBlock->prevBlock) = createProcess(processSize, label, prevBlockPointerCopy, theBlock);
+			*theBlock = createEmptyBlock(theBlock->size - processSize, theBlock->prevBlock, theBlock->nextBlock);
+
+			//set the nextBlock of the block 2 before this one to this one
+			prevBlockPointerCopy->nextBlock = (theBlock->prevBlock);
+			theBlock->dummyBlock = true;
+			return theBlock->prevBlock;
+
+		}
+
+
+	}
+}
+
+void buddyCleanMemory(memory mem)
+{
+	bool runWithoutChange = false;
+	while (!runWithoutChange)
+	{
+		runWithoutChange = true;
+		for (block* b = mem.firstBlock; b != NULL; b = b->nextBlock)
+		{
+
+			//If we're looking at a free block of memory, and not a process block, and the next block isn't null. We also don't want to look directly at dummy blocks.
+			if (!(b->isProcess) && (b->nextBlock != NULL) && !(b->dummyBlock))
+			{
+				printf("Blocks being considered: \n");
+				printBlockContents(*b);
+				printBlockContents(*(b->nextBlock));
+				printf("\n");
+
+				//If the next block is a dummy block
+				if (b->nextBlock->dummyBlock)
+				{
+					runWithoutChange = false;
+					mergeBlocks(b, b->nextBlock);
+				}
+
+				if (!(b->nextBlock->isProcess))
+				{
+					//if the block is a left block
+					if (b->location / b->size % 2 == 0)
+					{
+						printf("test0\n");
+						//If the blocks are buddies
+						if (b->size == b->nextBlock->size)
+						{
+							runWithoutChange = false;
+							mergeBlocks(b, b->nextBlock);
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+bool isPowerOfTwo(unsigned int x)
+{
+	while (((x & 1) == 0) && x > 1)
+		x >>= 1;
+	return (x == 1);
+}

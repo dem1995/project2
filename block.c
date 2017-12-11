@@ -8,10 +8,11 @@ typedef struct block
 {
 	bool isProcess;				//Whether the block is a process (non-free)
 	char* label;				//If the block is a process, this is the associated program name
-	unsigned long size;			//The number of bytes in the block
+	unsigned long size;			//The number of bytes in the block (or locked-down bytes, in the case of the buddy system)
 	unsigned long location;		//The relative location of this block within the memory struct instance that contains it.
 	struct block* prevBlock;	//A pointer to the previous block in memory. If there is none, this is a null pointer.
 	struct block* nextBlock;	//A pointer to the next block in memory. If there is none, this is a null pointer.
+	bool dummyBlock;			//Only makes sense in context of buddy system
 }block;
 
 
@@ -31,7 +32,9 @@ block createEmptyBlock(unsigned long size, block* prevBlock, block* nextBlock)
 		//.prevBlock = prevBlock,
 		prevBlock,
 		//.nextBlock = nextBlock
-		nextBlock
+		nextBlock,
+		//.buddyVal = 0 
+		false
 	};
 
 	return newBlock;
@@ -54,10 +57,20 @@ block createProcess(unsigned long size, char* label, block* prevBlock, block* ne
 		//.prevBlock = prevBlock,
 		prevBlock,
 		//.nextBlock = nextBlock
-		nextBlock
+		nextBlock,
+		//.buddyVal = 0
+		false
 	};
 
 	return newProcess;
+}
+
+block* mergeBlocks(block* thisBlock, block* nextBlock)
+{
+	thisBlock->size += nextBlock->size;
+	thisBlock->nextBlock = nextBlock->nextBlock;
+	free(nextBlock);
+	return thisBlock;
 }
 
 /*Converts a process block to a non-process block, simulating releasing memory*/

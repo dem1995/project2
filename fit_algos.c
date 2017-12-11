@@ -1,5 +1,5 @@
 #include "memory.c"
-#include "blockBuddyMethods.c"
+#include "block_buddy_methods.c"
 
 #ifndef FIT_ALGOS_C
 #define FIT_ALGOS_C
@@ -92,7 +92,7 @@ block* buddyFitProcess(memory* mem, unsigned long size, char* label)
 	block* blockToBreak = NULL;
 	for (block* b = mem->firstBlock; b != NULL; b = b->nextBlock)
 	{
-		if (b->size > size && !(b->isProcess))
+		if (b->size > size && !(b->isProcess) && ! (b->dummyBlock))
 		{
 			if (b->size < curSmallestAccoBlock || curSmallestAccoBlock == 0)
 			{
