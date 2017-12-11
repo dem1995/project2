@@ -103,6 +103,12 @@ block* buddyFitProcess(memory* mem, unsigned long size, char* label)
 		}
 	}
 
+	if (blockToBreak != NULL)
+	{
+		printf("The block we're breaking for process %s is ", label);
+		printBlockContents(*blockToBreak);
+	}
+
 	if (blockToBreak!=NULL)
 	{
 		splitBlockUntilPieceSize(blockToBreak, size);
