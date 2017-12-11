@@ -132,7 +132,7 @@ int main(int argc, char ** argv)
 					{
 						spawnedProcess = buddyFitProcess(&mem, size, label);
 					}
-					printf("MEMORY: ");
+					printf("MEMORY:\n");
 					printAllMemContents(mem);
 					if (spawnedProcess!=NULL)
 						printf("ALLOCATED %s %lu\n", label, spawnedProcess->location);

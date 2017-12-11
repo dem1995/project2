@@ -146,6 +146,9 @@ void printAllMemContents(memory mem)
 		spaceBool = true;
 		printBlockContents(*b);
 		printf("(Is Process: %s, Label: %s, Size: %lu, Location: %lu, Dummy: %s)\n", b->isProcess ? "true" : "false", b->label, b->size, b->location, b->dummyBlock ? "true" : "false");
+		bool pbin = b->prevBlock == NULL;
+		bool nbin = b->nextBlock == NULL;
+		printf("Prev : (%lu, %lu) Next : (%lu, %lu)\n", pbin ? 1 : b->prevBlock->size, pbin ? 1 : b->prevBlock->location, nbin ? 1 : b->nextBlock->size, nbin ? 1 : b->nextBlock->location);
 	}
 	printf("\n");
 }
