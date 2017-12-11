@@ -56,14 +56,20 @@ void buddyCleanMemory(memory mem)
 		runWithoutChange = true;
 		for (block* b = mem.firstBlock; b != NULL; b = b->nextBlock)
 		{
+
 			//If we're looking at a free block of memory, and not a process block, and the next block isn't null
 			if (!(b->isProcess) && (b->nextBlock != NULL))
 			{
+				printf("Blocks being considered: \n");
+				printBlockContents(*b);
+				printBlockContents(*(b->nextBlock));
+				printf("\n");
 				if (!(b->nextBlock->isProcess))
 				{
 					//if the block is a left block
 					if (b->location / b->size % 2 == 0)
 					{
+						printf("test0\n");
 						//If the blocks are buddies
 						if (b->size == b->nextBlock->size)
 						{
