@@ -109,13 +109,21 @@ block* buddyFitProcess(memory* mem, unsigned long size, char* label)
 		printBlockContents(*blockToBreak);
 	}
 
+	printAllMemContents(*mem);
+
 	if (blockToBreak!=NULL)
 	{
 		splitBlockUntilPieceSize(blockToBreak, size);
 		spawnedProcess = buddySpawnProcess(mem, blockToBreak, label, size);
 	}
 
+	printf("AFter breaking, but before cleaning: \n");
+	printAllMemContents(*mem);
+
 	buddyCleanMemory(*mem);
+
+	printf("After cleaning: \n");
+	printAllMemContents(*mem);
 
 	return spawnedProcess;
 }
