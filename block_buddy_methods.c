@@ -3,16 +3,16 @@
 
 void splitBlock(block* blockToSplit)
 {
-	printf("Splitting block: \n");
-	printBlockContents(*blockToSplit);
+	//printf("Splitting block: \n");
+	//printBlockContents(*blockToSplit);
 	block* sb2 = malloc(sizeof(block));
 	block* blockAfterSplit = blockToSplit->nextBlock;
 	*blockToSplit = createEmptyBlock(blockToSplit->size / 2, blockToSplit->prevBlock, sb2);
 	*sb2 = createEmptyBlock(blockToSplit->size, blockToSplit, blockAfterSplit);
-	printf("Results: \n");
-	printBlockContents(*sb2);
-	printBlockContents(*blockToSplit);
-	printf("\n");
+	//printf("Results: \n");
+	//printBlockContents(*sb2);
+	//printBlockContents(*blockToSplit);
+	//printf("\n");
 }
 
 void splitBlockUntilPieceSize(block* blockToSplit, unsigned long size)
@@ -86,10 +86,10 @@ void buddyCleanMemory(memory mem)
 			//If we're looking at a free block of memory, and not a process block, and the next block isn't null. We also don't want to look directly at dummy blocks.
 			if (!(b->isProcess) && (b->nextBlock != NULL) && !(b->dummyBlock))
 			{
-				printf("Blocks being considered: \n");
-				printBlockContents(*b);
-				printBlockContents(*(b->nextBlock));
-				printf("\n");
+				//printf("Blocks being considered: \n");
+				//printBlockContents(*b);
+				//printBlockContents(*(b->nextBlock));
+				//printf("\n");
 
 				//If the next block is a dummy block
 				if (b->nextBlock->dummyBlock)
