@@ -145,6 +145,7 @@ void printAllMemContents(memory mem)
 			printf(" ");
 		spaceBool = true;
 		printBlockContents(*b);
+		printf("(Is Process: %s, Label: %s, Size: %lu, Location: %lu, Dummy: %s)\n", b->isProcess ? "true" : "false", b->label, b->size, b->location, b->dummyBlock ? "true" : "false");
 	}
 	printf("\n");
 }
