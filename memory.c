@@ -50,27 +50,33 @@ void cleanMemory(memory mem)
 
 void buddyCleanMemory(memory mem)
 {
-	for (block* b = mem.firstBlock; b != NULL; b = b->nextBlock)
+	bool runWithoutChange = false;
+	while (!runWithoutChange)
 	{
-		//If we're looking at a free block of memory, and not a process block, and the next block isn't null
-		if (!(b->isProcess) && (b->nextBlock != NULL))
+		runWithoutChange = true;
+		for (block* b = mem.firstBlock; b != NULL; b = b->nextBlock)
 		{
-			if (!(b->nextBlock->isProcess))
+			//If we're looking at a free block of memory, and not a process block, and the next block isn't null
+			if (!(b->isProcess) && (b->nextBlock != NULL))
 			{
-				//if the block is a left block
-				if (b->location / b->size % 2 == 0)
+				if (!(b->nextBlock->isProcess))
 				{
-					//If the blocks are buddies
-					if (b->size == b->nextBlock->size)
+					//if the block is a left block
+					if (b->location / b->size % 2 == 0)
 					{
-						//Combine the blocks
-						block* thisBlock = b;
-						block* nextBlock = b->nextBlock;
-						thisBlock->size += nextBlock->size;
-						thisBlock->nextBlock = nextBlock->nextBlock;
-						free(nextBlock);
-					}			
-				}		
+						//If the blocks are buddies
+						if (b->size == b->nextBlock->size)
+						{
+							runWithoutChange = false;
+							//Combine the blocks
+							block* thisBlock = b;
+							block* nextBlock = b->nextBlock;
+							thisBlock->size += nextBlock->size;
+							thisBlock->nextBlock = nextBlock->nextBlock;
+							free(nextBlock);
+						}
+					}
+				}
 			}
 		}
 	}
