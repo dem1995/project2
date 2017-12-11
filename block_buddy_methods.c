@@ -23,6 +23,7 @@ void splitBlockUntilPieceSize(block* blockToSplit, unsigned long size)
 	{
 		printf("The block size is %lu vs %lu\n", blockToSplit->size, size);
 		splitBlock(blockToSplit);
+		printf("The block size is %lu vs %lu\n", blockToSplit->size, size);
 	}
 }
 
