@@ -125,7 +125,7 @@ block* buddyFitProcess(memory* mem, unsigned long size, char* label)
 	if (blockToBreak!=NULL)
 	{
 		//Split the block, dividing it into two equal pieces repeatedly (and then considering the block to be the leftern piece), until we can't split it anymore without being unable to house the process in it.
-		splitBlockUntilPieceSize(blockToBreak, size);
+		splitBlockUntilPieceSize(blockToBreak, size, *mem);
 		//Spawn the process in the block.
 		spawnedProcess = buddySpawnProcess(mem, blockToBreak, label, size);
 	}

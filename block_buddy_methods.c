@@ -17,13 +17,15 @@ void splitBlock(block* blockToSplit)
 }
 
 //Keeps splitting a block into two pieces (splitting the leftmost block at each step) until the leftmost block is no longer able to be split without being too small to house a process of /size/ bytes.
-void splitBlockUntilPieceSize(block* blockToSplit, unsigned long size)
+void splitBlockUntilPieceSize(block* blockToSplit, unsigned long size, memory mem)
 {
 	while ((blockToSplit->size) / 2 >= size)
 	{
-		printf("The block size is %lu vs %lu\n", blockToSplit->size, size);
+		printf("mem1: \n");
+		printAllMemContents(mem);
 		splitBlock(blockToSplit);
-		printf("The block size is %lu vs %lu\n", blockToSplit->size, size);
+		printf("mem2: \n");
+		printAllMemContents(mem);
 	}
 }
 
