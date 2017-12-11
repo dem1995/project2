@@ -60,7 +60,7 @@ int main(int argc, char ** argv)
 	else
 		openFile(cwd, fileName, &shellInFP, "r");
 
-	bool isBuddyFit = (strcmp(fitAlgoChoice, "BUDDYFIT") == 0);
+	bool isBuddyFit = (strcmp(fitAlgoChoice, "BUDDY") == 0);
 
 	/* Now for input readin.*/
 	while (!feof(shellInFP)) 
@@ -102,7 +102,7 @@ int main(int argc, char ** argv)
 						spawnedProcess = bestFitProcess(&mem, size, label);
 					else if (strcmp(fitAlgoChoice, "NEXTFIT") == 0)
 						spawnedProcess = nextFitProcess(&mem, size, label, &nextFitCounter);
-					else if (strcmp(fitAlgoChoice, "BUDDYFIT") == 0)
+					else if (strcmp(fitAlgoChoice, "BUDDY") == 0)
 						spawnedProcess = buddyFitProcess(&mem, size, label);
 					if (spawnedProcess!=NULL)
 						printf("ALLOCATED %s %lu\n", label, spawnedProcess->location);

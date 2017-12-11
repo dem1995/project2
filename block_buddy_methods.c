@@ -30,7 +30,7 @@ block* buddySpawnProcess(memory* mem, block* theBlock, char* label, unsigned lon
 {
 	if (processSize > theBlock->size)
 	{
-		printf("Process %s size too big", label);
+
 		return NULL;
 	}
 	else if (processSize == theBlock->size)
