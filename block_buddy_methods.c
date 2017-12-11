@@ -120,10 +120,13 @@ void buddyCleanMemory(memory mem)
 
 
 
-void printBuddyBlockContents(block b)
+bool printBuddyBlockContents(block b)
 {
 	if (b.isProcess)
+	{
 		printf("(%s, %lu, %lu)", b.label, b.size, b.location);
+		return true;
+	}
 	else
 	{
 		bool isAfterOtherEmptyBlock = false;
@@ -150,8 +153,10 @@ void printBuddyBlockContents(block b)
 					size += b2->size;
 			}
 			printf("(%lu, %lu)", size, location);
+			return true;
 		}
 	}
+	return false;
 }
 
 void printBuddyEmptyBlockMemContents(memory mem)
@@ -163,8 +168,7 @@ void printBuddyEmptyBlockMemContents(memory mem)
 		{
 			if (areEmptyBlocks)
 				printf(" ");
-			areEmptyBlocks = true;
-			printBuddyBlockContents(*b);
+			areEmptyBlocks = printBuddyBlockContents(*b);
 		}
 	}
 
