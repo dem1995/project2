@@ -15,9 +15,8 @@ int main()
 	memory mem = createMemory(128);
 	splitBlock(mem.firstBlock);
 	printAllMemContents(mem);
-
 	freeMemory(mem);
-	printf("cutting 256 to 2 \n");
+	/*printf("cutting 256 to 2 \n");
 	memory mem2 = createMemory(256);
 	splitBlockUntilPieceSize(mem.firstBlock, 2);
 	printAllMemContents(mem2);
@@ -29,7 +28,7 @@ int main()
 	splitBlockUntilPieceSize(mem.firstBlock, 7);
 	printAllMemContents(mem3);
 
-	freeMemory(mem3);
+	freeMemory(mem3);*/
 }
 
 //
